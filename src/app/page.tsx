@@ -1,6 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import freighterApi from "@stellar/freighter-api";
 
 export default function HomePage() {
+  async function connect() {
+    const isConnected = await freighterApi.isConnected();
+
+    // if (isConnected) return;
+
+    const isAllowed = await freighterApi.setAllowed();
+
+    if (!isAllowed) return;
+
+    const publicKey = await freighterApi.getPublicKey();
+    console.log(publicKey);
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
@@ -19,17 +35,10 @@ export default function HomePage() {
               database and authentication.
             </div>
           </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+
+          <button className="" onClick={connect}>
+            Connect
+          </button>
         </div>
       </div>
     </main>
