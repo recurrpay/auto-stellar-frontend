@@ -18,18 +18,23 @@ export const dashboardConfig: DashboardConfig = {
       icon: "home",
     },
     {
-      title: "Payment History",
-      href: "/history",
-      icon: "home",
-    },
-    {
-      title: "Pay Employees",
-      href: "/add_user",
+      title: "Pay ",
+      href: "/payroll",
       icon: "home",
     },
     {
       title: "Users",
       href: "/users",
+      icon: "home",
+    },
+    {
+      title: "Payment History",
+      href: "/history",
+      icon: "home",
+    },
+    {
+      title: "Add  Users",
+      href: "/add_users",
       icon: "home",
     },
     {
