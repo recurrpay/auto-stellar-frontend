@@ -29,24 +29,7 @@ export function MainNav({ items, children }: MainNavProps) {
           {siteConfig.name}
         </span>
       </Link>
-      {items?.length ? (
-        <nav className="hidden gap-6 md:flex">
-          {items?.map((item, index) => (
-            <Link
-              key={index}
-              href={item.disabled ? "#" : item.href}
-              className={
-                // () =>
-                cn(
-                  "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
-                )
-              }
-            >
-              {item.title}
-            </Link>
-          ))}
-        </nav>
-      ) : null}
+
       <button
         className="flex items-center space-x-2 md:hidden"
         onClick={() => setShowMobileMenu(!showMobileMenu)}

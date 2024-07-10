@@ -91,8 +91,8 @@ export default function UserProfilePage() {
       >
         <DashboardShell>
           <DashboardHeader
-            heading="Visa Applications"
-            text="Find all your visa application here"
+            heading="Organizations"
+            text="Unlock Seamless Recurring Payments with Ease"
           >
             <Link href="/dashboard/user/visa/apply">
               <Button variant="outline">

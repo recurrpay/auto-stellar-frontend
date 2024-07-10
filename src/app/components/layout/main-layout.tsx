@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import {
   SignInButton,
   SignUpButton,
-  ,
   SignedOut,
   UserButton,
   useAuth,
@@ -47,8 +46,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           <MainNav items={marketingConfig.mainNav} />
 
           <nav>
-         
-
             <SignedOut>
               <SignInButton>
                 <Button

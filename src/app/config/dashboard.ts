@@ -1,4 +1,4 @@
-import type { DashboardConfig } from "~/types";
+import type { DashboardConfig } from "@/app/types/index";
 
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
@@ -13,22 +13,22 @@ export const dashboardConfig: DashboardConfig = {
   ],
   userSidebarNav: [
     {
-      title: "Digital Passport",
-      href: "/dashboard/user/",
+      title: "Dashboard",
+      href: "/dashboard",
       icon: "home",
     },
     {
-      title: "Visa Applications",
-      href: "/dashboard/user/visa",
+      title: "Payment History",
+      href: "/history",
       icon: "home",
     },
     {
-      title: "Apply for visa",
+      title: "Add Users",
       href: "/dashboard/user/visa/form",
       icon: "home",
     },
     {
-      title: "Travel History",
+      title: "Users",
       href: "/dashboard/user/travel-history",
       icon: "home",
     },
@@ -40,7 +40,7 @@ export const dashboardConfig: DashboardConfig = {
   ],
   adminSidebarNav: [
     {
-      title: "Visa Applications",
+      title: "Organization",
       href: "/dashboard/user/visa",
       icon: "home",
     },
