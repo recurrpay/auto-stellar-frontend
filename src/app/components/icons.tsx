@@ -39,6 +39,7 @@ import {
   FileTextIcon,
   FileImage,
   ArrowLeft,
+  PlusIcon,
   type XIcon as LucideIcon,
 } from "lucide-react";
 
@@ -99,4 +100,5 @@ export const Icons = {
   twitter: Twitter,
   check: Check,
   users: Users,
+  plus: PlusIcon,
 };

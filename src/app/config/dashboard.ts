@@ -23,17 +23,17 @@ export const dashboardConfig: DashboardConfig = {
       icon: "home",
     },
     {
-      title: "Add Users",
-      href: "/dashboard/user/visa/form",
+      title: "Pay Employees",
+      href: "/add_user",
       icon: "home",
     },
     {
       title: "Users",
-      href: "/dashboard/user/travel-history",
+      href: "/users",
       icon: "home",
     },
     {
-      title: "Profile",
+      title: "Organization Profile",
       href: "/dashboard/user/profile",
       icon: "home",
     },

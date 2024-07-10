@@ -23,7 +23,7 @@ import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/dashboard-layout";
 import { formatDate } from "../lib/utils";
 import { toast } from "../components/ui/toast";
-import { DataTable } from "@/app/components/ui/dataTable";
+import { UserTable } from "@/app/components/ui/userDataTable";
 const page = () => {
   return (
     <>
@@ -37,7 +37,7 @@ const page = () => {
         text="Find all your visa application here"
         buttonLabel="New Visa Application"
       >
-        <DataTable />
+        <UserTable />
       </DashboardLayout>
     </>
   );
