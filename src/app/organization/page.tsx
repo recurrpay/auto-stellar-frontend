@@ -97,13 +97,11 @@ export default function UserProfilePage() {
             <Link href="/dashboard/user/visa/apply">
               <Button variant="outline">
                 <Icons.edit className="mr-2 h-4 w-4" />
-                New Visa Application
+                New Organization Application
               </Button>
             </Link>
           </DashboardHeader>
         </DashboardShell>
-
-        {/* <VisaApplicationTable /> */}
       </DashboardLayout>
     </>
   );

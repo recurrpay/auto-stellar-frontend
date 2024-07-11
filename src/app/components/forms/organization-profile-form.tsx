@@ -1,6 +1,6 @@
 import * as React from "react";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { cn } from "@/app/lib/utils";
 import { Button } from "@/app/components/ui/button";
@@ -14,24 +14,66 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { useRouter } from "next/router";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "../ui/calendar";
 
-export function UserProfileForm({ className, ...props }: UserFormProps) {
+// Define the form schema using Zod
+const formSchema = z.object({
+  dob: z.date(),
+  phone: z.string(),
+  country: z.string(),
+  region: z.string(),
+  city: z.string(),
+  postal_code: z.string(),
+  address: z.string(),
+  nationalIdType: z.string(),
+  nationalId: z.string(),
+  nationalIdDoc: z.instanceof(FileList),
+});
+
+export function OrganizationProfile({ className, ...props }) {
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      dob: undefined,
+      phone: "",
+      country: "",
+      region: "",
+      city: "",
+      postal_code: "",
+      address: "",
+      nationalIdType: "",
+      nationalId: "",
+      nationalIdDoc: undefined,
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+    // Handle form submission
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
+  };
+
   return (
-    <div className={cn("my-12 grid gap-6 px-2")} {...props}>
+    <div className={cn("my-12 grid gap-6 px-2", className)} {...props}>
       <Form {...form}>
-        <form>
-          <fieldset disabled={disableForm} className="grid grid-cols-2 gap-4">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <fieldset className="grid grid-cols-2 gap-4">
             <FormField
               control={form.control}
               name="dob"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date of Birth</FormLabel>
+                  <FormLabel>Date of Onboarding</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -56,6 +98,9 @@ export function UserProfileForm({ className, ...props }: UserFormProps) {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
                         initialFocus
                       />
                     </PopoverContent>
@@ -140,7 +185,7 @@ export function UserProfileForm({ className, ...props }: UserFormProps) {
               name="address"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel>Address Line 1/2</FormLabel>
+                  <FormLabel>Organization's Address Line 1/2</FormLabel>
                   <FormControl>
                     <Input placeholder="ABC Tower, BKC" {...field} />
                   </FormControl>
@@ -196,11 +241,7 @@ export function UserProfileForm({ className, ...props }: UserFormProps) {
               )}
             />
 
-            <Button
-              type="submit"
-              className="col-span-2 mt-6"
-              disabled={disableForm}
-            >
+            <Button type="submit" className="col-span-2 mt-6">
               Submit
             </Button>
           </fieldset>

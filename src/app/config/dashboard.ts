@@ -39,7 +39,7 @@ export const dashboardConfig: DashboardConfig = {
     },
     {
       title: "Organization Profile",
-      href: "/dashboard/user/profile",
+      href: "/profile",
       icon: "home",
     },
   ],

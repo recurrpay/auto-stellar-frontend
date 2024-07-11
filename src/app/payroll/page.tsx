@@ -26,6 +26,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+
+import { cn } from "@/app/lib/utils";
+import { Calendar } from "@/app/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/app/components/ui/popover";
 import Link from "next/link";
 import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/dashboard-layout";
@@ -33,8 +43,12 @@ import { formatDate } from "../lib/utils";
 import { toast } from "../components/ui/toast";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
+import { Label } from "@/app/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const Page = () => {
+  const [date, setDate] = React.useState<Date>();
+
   const [userInputs, setUserInputs] = useState([
     { email: "", amount: "", token: "XLM" },
   ]);
@@ -69,6 +83,49 @@ const Page = () => {
         text="Find all your visa application here"
         buttonLabel="New Visa Application"
       >
+        <div className="flex gap-[115px]">
+          <div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "m-[26px] w-[240px] justify-start text-left font-normal",
+
+                    !date && "text-muted-foreground",
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date ? (
+                    format(date, "PPP")
+                  ) : (
+                    <span>Pick a date for paying</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={setDate}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+          <div className="pt-[36px]">
+            <RadioGroup defaultValue="comfortable" className="flex flex-row">
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="comfortable" id="r2" />
+                <Label htmlFor="r2">One Time</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="compact" id="r3" />
+                <Label htmlFor="r3">Recurring Pay</Label>
+              </div>
+            </RadioGroup>
+          </div>
+        </div>
         {userInputs.map((input, index) => (
           <div key={index} className="m-6 flex gap-5">
             <Input
@@ -110,12 +167,12 @@ const Page = () => {
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button>Pay</Button>
             <Button onClick={handleAddClick} className="">
               <Icons.add />
             </Button>
           </div>
         ))}
+        <Button className="">Create Payroll</Button>
       </DashboardLayout>
     </>
   );
