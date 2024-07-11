@@ -1,36 +1,44 @@
 "use client";
-
-import Link from "next/link";
-import freighterApi from "@stellar/freighter-api";
-import Form from "../app/components/forms/user";
-import { ContainerScroll } from "@/app/components/container-scroll";
+import ConnectButton from "./components/ui/connect_wallet";
+import { World, GlobeConfig } from "./components/ui/globe";
 
 export default function HomePage() {
-  async function connect() {
-    const isConnected = await freighterApi.isConnected();
+  const earthColors = {
+    globeColor: "#2c3e50", // Dark blueish globe color
+    atmosphereColor: "#DBEEFF", // White atmosphere color
+    emissive: "#000000", // Black emissive color
+    polygonColor: "#9fd8ff", // Light blue polygon (land) color
+    ambientLight: "#DBEEFF", // White ambient light
+    directionalLeftLight: "#DBEEFF", // White left directional light
+    directionalTopLight: "#DBEEFF", // White top directional light
+    pointLight: "#DBEEFF", // White point light
+  };
 
-    // if (isConnected) return;
-
-    const isAllowed = await freighterApi.setAllowed();
-
-    if (!isAllowed) return;
-
-    const publicKey = await freighterApi.getPublicKey();
-    console.log(publicKey);
-  }
-
-  const titleComponent = (
-    <h1 className="text-4xl font-bold">Welcome to the Stellar Wallet</h1>
-  );
+  const defaultGlobeConfig: GlobeConfig = {
+    ...earthColors,
+    pointSize: 20,
+    showAtmosphere: true,
+    atmosphereAltitude: 0.1,
+    emissiveIntensity: 0.1,
+    shininess: 0.6,
+    arcTime: 2,
+    arcLength: 0.9,
+    rings: 9,
+    maxRings: 2,
+    initialPosition: {
+      lat: 1,
+      lng: 1,
+    },
+    autoRotate: true,
+    autoRotateSpeed: 1,
+  };
+  console.log(defaultGlobeConfig);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <ContainerScroll titleComponent={titleComponent}>
-        <button onClick={connect} className="rounded bg-blue-500 px-4 py-2">
-          Connect Wallet
-        </button>
-        <Form />
-      </ContainerScroll>
-    </main>
+    <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+      <main className="mt-[20rem] h-[40rem]">
+        <World globeConfig={defaultGlobeConfig} data={earthColors} />
+      </main>
+    </div>
   );
 }
