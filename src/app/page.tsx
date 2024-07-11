@@ -1,6 +1,7 @@
 "use client";
 import ConnectButton from "./components/ui/connect_wallet";
 import { World, GlobeConfig } from "./components/ui/globe";
+import { UserNav } from "./components/user-nav";
 
 export default function HomePage() {
   const earthColors = {
