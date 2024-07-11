@@ -45,7 +45,6 @@ export default function HomePage() {
           <div className="flex h-16 items-center px-4">
             <MainNav className="mx-6" />
             <div className="ml-auto flex items-center space-x-4">
-              <Search />
               <UserNav />
             </div>
           </div>
@@ -53,14 +52,14 @@ export default function HomePage() {
         <Landing />
         <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
           <main className="mt-[20rem] h-[40rem]">
-            <h6 className="fixed left-[20%] top-[63%] text-center text-8xl font-bold">
+            <h6 className="font-heading fixed left-[20%] top-[63%] text-center text-8xl">
               Recurr
             </h6>
-            <h6 className="fixed right-[32rem] top-[63%] text-center text-8xl font-bold">
+            <h6 className="font-heading fixed right-[32rem] top-[63%] text-center text-8xl">
               Pay
             </h6>
 
-            {/* <World globeConfig={defaultGlobeConfig} data={earthColors} /> */}
+            {/* <World globeConfig={defaultGlobeConfig} data={earthColors} />  */}
           </main>
         </div>
       </div>

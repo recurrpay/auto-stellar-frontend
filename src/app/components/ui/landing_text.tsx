@@ -4,7 +4,7 @@ import styles from "@/styles/landing.module.css";
 const Landing = () => {
   return (
     <div className="space-y-12 pt-[12rem] text-center">
-      <div className="text-center text-5xl font-bold">
+      <div className="font-heading text-center text-5xl">
         Services offered
         <div className="relative inline-grid grid-cols-1 grid-rows-1 gap-12 overflow-hidden">
           <span
