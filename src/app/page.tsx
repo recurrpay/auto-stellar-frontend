@@ -1,7 +1,10 @@
 "use client";
 import ConnectButton from "./components/ui/connect_wallet";
 import { World, GlobeConfig } from "./components/ui/globe";
-import { UserNav } from "./components/user-nav";
+import { MainNav } from "./components/user-nav";
+import { Search } from "./components/ui/search";
+import { UserNav } from "./components/ui/nav";
+import Landing from "./components/ui/landing_text";
 
 export default function HomePage() {
   const earthColors = {
@@ -36,10 +39,24 @@ export default function HomePage() {
   console.log(defaultGlobeConfig);
 
   return (
-    <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
-      <main className="mt-[20rem] h-[40rem]">
-        <World globeConfig={defaultGlobeConfig} data={earthColors} />
-      </main>
+    <div>
+      <div className="hidden flex-col md:flex">
+        <div className="border-b">
+          <div className="flex h-16 items-center px-4">
+            <MainNav className="mx-6" />
+            <div className="ml-auto flex items-center space-x-4">
+              <Search />
+              <UserNav />
+            </div>
+          </div>
+        </div>
+        <Landing />
+        <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
+          <main className="mt-[20rem] h-[40rem]">
+            <World globeConfig={defaultGlobeConfig} data={earthColors} />
+          </main>
+        </div>
+      </div>
     </div>
   );
 }
