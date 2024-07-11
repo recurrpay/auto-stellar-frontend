@@ -53,7 +53,14 @@ export default function HomePage() {
         <Landing />
         <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
           <main className="mt-[20rem] h-[40rem]">
-            <World globeConfig={defaultGlobeConfig} data={earthColors} />
+            <h6 className="fixed left-[20%] top-[63%] text-center text-8xl font-bold">
+              Recurr
+            </h6>
+            <h6 className="fixed right-[32rem] top-[63%] text-center text-8xl font-bold">
+              Pay
+            </h6>
+
+            {/* <World globeConfig={defaultGlobeConfig} data={earthColors} /> */}
           </main>
         </div>
       </div>

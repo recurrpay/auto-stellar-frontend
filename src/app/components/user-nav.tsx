@@ -24,16 +24,16 @@ export function MainNav({
         Customers
       </Link>
       <Link
-        href="/examples/dashboard"
+        href="/organization"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        Admin
+        Organization
       </Link>
       <Link
         href="/examples/dashboard"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
-        User
+        Employee
       </Link>
     </nav>
   );

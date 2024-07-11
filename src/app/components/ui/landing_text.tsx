@@ -10,36 +10,30 @@ const Landing = () => {
           <span
             className={`${styles.animate_word} col-span-full row-span-full`}
           >
-            Flutter
+            Subscription Funds
           </span>
           <span
             className={`${styles.animate_word_delay_1} col-span-full row-span-full`}
           >
-            Django
+            Automated Payments
           </span>
           <span
             className={`${styles.animate_word_delay_2} col-span-full row-span-full`}
           >
-            Website
+            Tokenized Payments
           </span>
           <span
             className={`${styles.animate_word_delay_3} col-span-full row-span-full`}
           >
-            VueJS
+            Recurring Payments
           </span>
           <span
             className={`${styles.animate_word_delay_4} col-span-full row-span-full`}
           >
-            NuxtJS
+            Invoice Management
           </span>
         </div>
       </div>
-      <p className="text-white">
-        Want to hire me for work ping me{" "}
-        <a className="underline" href="mailto:ponnamkarthik3@gmail.com">
-          mail here
-        </a>
-      </p>
     </div>
   );
 };
