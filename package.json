@@ -26,6 +26,7 @@
     "@stellar/freighter-api": "^2.0.0",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/react-table": "^8.19.2",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
