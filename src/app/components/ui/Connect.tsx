@@ -77,7 +77,7 @@ const Connect: React.FC<ConnectProps> = ({
             </p>
           </div>
         ) : (
-          <button onClick={handleConnectWallet}>Connect Wallet</button>
+          <Button onClick={handleConnectWallet}>Connect Wallet</Button>
         )
       ) : (
         <p>Please install the Freighter extension.</p>

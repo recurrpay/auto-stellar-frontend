@@ -115,7 +115,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </div>
           <div className="flex flex-col">
             <div className="grid gap-4">
-              <Label className="text-black" htmlFor="wallet">
+              <Label className="mb-2 text-black" htmlFor="wallet">
                 Wallet Address
               </Label>
             </div>
