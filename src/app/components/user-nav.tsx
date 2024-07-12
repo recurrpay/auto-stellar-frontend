@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Search } from "./ui/search";
 
 import { cn } from "@/app/lib/utils";
+import { ModeToggle } from "@/app/components/mode-toggle";
 
 export function MainNav({
   className,
@@ -38,6 +39,7 @@ export function MainNav({
         >
           Employee
         </Link>
+        <ModeToggle />
       </nav>
     </div>
   );
