@@ -14,8 +14,9 @@ import {
   FreighterModule,
   AlbedoModule,
 } from "@creit.tech/stellar-wallets-kit/";
+import { Button } from "./button";
 
-export default function Connutton() {
+export default function ConnectButton() {
   const kit = new StellarWalletsKit({
     selectedWalletId: XBULL_ID,
     network: WalletNetwork.PUBLIC,
@@ -35,10 +36,8 @@ export default function Connutton() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <button onClick={openModal} className="rounded bg-blue-500 px-4 py-2">
-        Connect Wallet
-      </button>
+    <main className="bg-gradient-to-btext-white flex flex-col items-center justify-center">
+      <Button onClick={openModal}>Connect Wallet</Button>
     </main>
   );
 }

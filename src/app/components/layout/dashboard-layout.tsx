@@ -1,4 +1,4 @@
-import { dashboardConfig } from "@/app/config/dashboard";
+import { dashboardConfig } from "@/app/config/organization-dashboard";
 import { MainNav } from "@/app/components/main-nav";
 import { DashboardNav } from "@/app/components/nav";
 import { SiteFooter } from "@/app/components/site-footer";

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { cn } from "@/app/lib/utils";
 import { buttonVariants } from "@/app/components/ui/button";
-import { UserAuthForm } from "@/app/components/ui/user-auth-form";
+import { UserAuthForm } from "@/app/components/ui/organization-auth-form";
 import ReccurPay from "../../../public/recurrPay.svg";
 import Logo from "../../../public/pm.svg";
 

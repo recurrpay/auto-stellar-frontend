@@ -6,6 +6,7 @@ import { Icons } from "@/app/components/icons";
 import { MobileNav } from "@/app/components/mobile-nav";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Search } from "./ui/search";
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -24,7 +25,9 @@ export function MainNav({ items, children }: MainNavProps) {
           "hidden items-center space-x-2 hover:text-foreground/80 md:flex",
         )}
       >
-        <Icons.logo />
+        <div>
+          <Search />
+        </div>
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>

@@ -27,13 +27,13 @@ export function MainNav({
           Customers
         </Link>
         <Link
-          href="/organization"
+          href="/organization-login"
           className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
         >
           Organization
         </Link>
         <Link
-          href="/examples/dashboard"
+          href="/user-login"
           className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
         >
           Employee

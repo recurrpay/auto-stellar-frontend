@@ -7,7 +7,6 @@ import { Icons } from "@/app/components/icons";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
-import ConnectButton from "./connect_wallet";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -55,24 +54,33 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               disabled={isLoading}
             />
           </div>
-          <div className="flex flex-row">
-            <div className="grid gap-4">
-              <Label className="text-black" htmlFor="email">
-                Avatar
-              </Label>
-              <Input
-                id="email"
-                placeholder="enter your avatar"
-                type="password"
-                autoCapitalize="none"
-                autoComplete="email"
-                autoCorrect="off"
-                disabled={isLoading}
-              />
-            </div>
-            <div className="mx-2 mt-7">
-              <ConnectButton />
-            </div>
+          <div className="grid gap-4">
+            <Label className="text-black" htmlFor="email">
+              Organization Logo
+            </Label>
+            <Input
+              id="email"
+              placeholder="enter your logo"
+              type="password"
+              autoCapitalize="none"
+              autoComplete="email"
+              autoCorrect="off"
+              disabled={isLoading}
+            />
+          </div>
+          <div className="grid gap-4">
+            <Label className="text-black" htmlFor="email">
+              Organization Website
+            </Label>
+            <Input
+              id="email"
+              placeholder="enter your link"
+              type="password"
+              autoCapitalize="none"
+              autoComplete="email"
+              autoCorrect="off"
+              disabled={isLoading}
+            />
           </div>
           <Button disabled={isLoading}>
             {isLoading && (
