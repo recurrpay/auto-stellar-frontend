@@ -1,8 +1,4 @@
 "use client";
-
-import Link from "next/link";
-import freighterApi from "@stellar/freighter-api";
-import Form from "../app/components/forms/user";
 import {
   StellarWalletsKit,
   WalletNetwork,

@@ -1,20 +1,72 @@
-import { Metadata } from "next";
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
-
-import { cn } from "@/app/lib/utils";
-import { buttonVariants } from "@/app/components/ui/button";
-import { UserAuthForm } from "@/app/components/ui/user-signin";
+import {
+  StellarWalletsKit,
+  WalletNetwork,
+  ISupportedWallet,
+  XBULL_ID,
+} from "@creit.tech/stellar-wallets-kit";
+import {
+  xBullModule,
+  FreighterModule,
+  AlbedoModule,
+} from "@creit.tech/stellar-wallets-kit/";
+import { Button } from "@/app/components/ui/button";
 import ReccurPay from "../../../public/recurrPay.svg";
 import Logo from "../../../public/pm.svg";
-import ConnectButton from "../components/ui/connect_wallet";
 
-export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
+// Mock function to check wallet connection status
+// Replace this with your actual logic to check wallet connection
+const checkWalletConnection = async () => {
+  // Replace with your actual wallet connection check
+  // This is just a mock implementation
+  // For example, checking local storage, calling an API, etc.
+  const isConnected = localStorage.getItem("walletConnected") === "true";
+  return isConnected;
 };
 
 export default function AuthenticationPage() {
+  const kit = new StellarWalletsKit({
+    selectedWalletId: XBULL_ID,
+    network: WalletNetwork.PUBLIC,
+    modules: [new xBullModule(), new FreighterModule(), new AlbedoModule()],
+  });
+
+  const handleWalletSelection = async (option: ISupportedWallet) => {
+    kit.setWallet(option.id);
+    const publicKey = await kit.getPublicKey();
+    // Do something else with the publicKey
+    // Set wallet connection status in local storage
+    localStorage.setItem("walletConnected", "true");
+    localStorage.setItem("walletPublicKey", publicKey); // Store public key for later use
+    setIsConnected(true);
+    router.push("/user-dashboard"); // Redirect to user dashboard after wallet is connected
+  };
+
+  const openModal = () => {
+    kit.openModal({
+      onWalletSelected: handleWalletSelection,
+    });
+  };
+
+  const router = useRouter();
+
+  const [isConnected, setIsConnected] = useState(false);
+
+  useEffect(() => {
+    const checkConnection = async () => {
+      const connectionStatus = await checkWalletConnection();
+      setIsConnected(connectionStatus);
+      if (connectionStatus) {
+        router.push("/user-dashboard");
+      }
+    };
+
+    checkConnection();
+  }, [router]);
+
   return (
     <div className="container relative hidden h-[100vh] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
@@ -41,7 +93,7 @@ export default function AuthenticationPage() {
       </div>
       <div className="lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-          <ConnectButton />
+          <Button onClick={openModal}>Connect Wallet</Button>
         </div>
       </div>
     </div>
