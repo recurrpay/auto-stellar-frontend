@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev --experimental-https",
     "lint": "next lint",
     "start": "next start"
   },
@@ -24,6 +24,7 @@
     "@react-three/drei": "^9.108.3",
     "@react-three/fiber": "^8.16.8",
     "@stellar/freighter-api": "^2.0.0",
+    "@stellar/stellar-sdk": "^12.1.0",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/react-table": "^8.19.2",
     "axios": "^1.7.2",
