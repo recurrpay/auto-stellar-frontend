@@ -5,6 +5,7 @@ import { Chart } from "@/app/components/ui/chart";
 import { SmallChart } from "@/app/components/ui/smallchart";
 import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/user-dashboard";
+import { OrganizationTable } from "@/app/components/ui/orgTable";
 
 const page = () => {
   return (
@@ -19,8 +20,7 @@ const page = () => {
         text="Find all your visa application here"
         buttonLabel="New Visa Application"
       >
-        <Chart />
-        <SmallChart />
+        <OrganizationTable />
       </DashboardLayout>
     </>
   );

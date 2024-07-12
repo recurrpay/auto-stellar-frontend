@@ -1,6 +1,6 @@
-import type { DashboardConfig } from "@/app/types/index";
+import type { UserConfig } from "@/app/types/user";
 
-export const dashboardConfig: DashboardConfig = {
+export const userConfig: UserConfig = {
   mainNav: [
     {
       title: "User",
@@ -14,32 +14,22 @@ export const dashboardConfig: DashboardConfig = {
   userSidebarNav: [
     {
       title: "Dashboard",
-      href: "/dashboard",
+      href: "/user-dashboard",
       icon: "home",
     },
     {
-      title: "Pay ",
-      href: "/payroll",
-      icon: "home",
-    },
-    {
-      title: "Users",
-      href: "/users",
+      title: "Organizations",
+      href: "/users-organizations",
       icon: "home",
     },
     {
       title: "Payment History",
-      href: "/history",
+      href: "/user-payment-history",
       icon: "home",
     },
     {
-      title: "Add  Users",
-      href: "/add_users",
-      icon: "home",
-    },
-    {
-      title: "Organization Profile",
-      href: "/profile",
+      title: "User Profile",
+      href: "/user-profile",
       icon: "home",
     },
   ],
