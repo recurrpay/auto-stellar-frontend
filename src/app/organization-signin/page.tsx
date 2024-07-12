@@ -1,13 +1,10 @@
+"use client";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { UserAuthForm } from "@/app/components/ui/org-signin";
 import Authentication from "../components/forms/Authentication";
-
-export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
-};
+import { SignInRequest, SignInResponse } from "@/app/utils/authapi";
 
 export default function AuthenticationPage() {
   return (

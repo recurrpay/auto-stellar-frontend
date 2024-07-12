@@ -60,7 +60,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     try {
       const response = await signup(formData);
       console.log("Signup successful:", response);
-      router.push("/organization-signin");
+      router.push("/organization-dashboard");
     } catch (error) {
       console.error("Signup failed:", error);
       // Handle signup error, e.g., show an error message

@@ -18,3 +18,15 @@ const createAuthHeader = () => {
 };
 
 export { getAccessToken, createAuthHeader };
+
+export interface SignInRequest {
+  authType: string;
+  email: string;
+  password: string;
+  x: string;
+  y: string;
+}
+
+export interface SignInResponse {
+  token: string;
+}

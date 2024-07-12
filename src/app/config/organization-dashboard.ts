@@ -38,6 +38,11 @@ export const dashboardConfig: DashboardConfig = {
       icon: "home",
     },
     {
+      title: "Deposits",
+      href: "/organization-deposit",
+      icon: "home",
+    },
+    {
       title: "Organization Profile",
       href: "/organization-profile",
       icon: "home",
