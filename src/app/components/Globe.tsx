@@ -395,7 +395,7 @@ export function Globe() {
   ];
 
   return (
-    <div className="relative flex h-screen w-full flex-row items-center justify-center bg-white dark:bg-black md:h-auto">
+    <div className="relative flex h-screen w-full flex-row items-center justify-center md:h-auto">
       <div className="relative mx-auto h-full w-full overflow-hidden px-4">
         <motion.div
           initial={{
@@ -407,7 +407,7 @@ export function Globe() {
             y: 0,
           }}
           transition={{
-            duration: 1,
+            duration: 0.5,
           }}
           className="div"
         ></motion.div>

@@ -14,13 +14,10 @@ export default function HomePage() {
       <div className="border-b">
         <div className="flex h-16 items-center px-4">
           <MainNav className="mx-6" />
-          <div className="ml-auto flex items-center space-x-4">
-            <UserNav />
-          </div>
         </div>
       </div>
       <div className="tems-center relative flex justify-center">
-        <div className="absolute inset-0 -z-10 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <div className="mx-auto flex flex-col gap-10 p-6 text-center md:flex-row md:space-x-6 md:text-left">
           <div className="max-w-2xl">
             {/* <h1 className="mb-4 mt-40 text-6xl font-bold"></h1> */}
@@ -30,6 +27,20 @@ export default function HomePage() {
               seamlessly do cross border payments with the poweer of Stellar.
             </p>
             <Button>Get Started</Button>
+            <div className="mt-10 flex gap-10">
+              <div>
+                <h1 className="text-4xl">$13432</h1>
+                <p>Market Size</p>
+              </div>
+              <div>
+                <h1 className="text-4xl">$13432</h1>
+                <p>Market Size</p>
+              </div>
+              <div>
+                <h1 className="text-4xl">$13432</h1>
+                <p>Market Size</p>
+              </div>
+            </div>
           </div>
           <div className="flex h-[600px] w-[600px] justify-center md:mt-0 md:justify-start">
             <Globe />

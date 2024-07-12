@@ -1,10 +1,22 @@
+import { useTheme } from "next-themes";
 import Image from "next/image";
-import Logo from "../../../../public/pm.svg";
+import RecurrpayDark from "../../../../public/recurrPay.svg";
+import RecurrpayLight from "../../../../public/recurrPayBlack.svg";
 
 export function Search() {
+  const { theme } = useTheme();
+
   return (
-    <div className="h-12 w-12 rounded-sm bg-black">
-      <Image src={Logo} alt="Logo" className="mx-auto h-9 w-9 pt-2" />
+    <div className={`h-12 w-auto rounded-sm`}>
+      <Image
+        src={
+          theme === "dark"
+            ? (RecurrpayDark as string)
+            : (RecurrpayLight as string)
+        }
+        alt="Logo"
+        className="mx-auto h-9 w-auto pt-2"
+      />
     </div>
   );
 }
