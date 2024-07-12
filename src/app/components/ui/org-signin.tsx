@@ -45,48 +45,21 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               Password
             </Label>
             <Input
-              id="email"
+              id="password"
               placeholder="enter your password"
               type="password"
               autoCapitalize="none"
-              autoComplete="email"
+              autoComplete="new-password"
               autoCorrect="off"
               disabled={isLoading}
             />
           </div>
-          <div className="grid gap-4">
-            <Label className="text-black" htmlFor="email">
-              Organization Logo
-            </Label>
-            <Input
-              id="email"
-              placeholder="enter your logo"
-              type="password"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-            />
-          </div>
-          <div className="grid gap-4">
-            <Label className="text-black" htmlFor="email">
-              Organization Website
-            </Label>
-            <Input
-              id="email"
-              placeholder="enter your link"
-              type="password"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-            />
-          </div>
+
           <Button disabled={isLoading}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Sign Up
+            Sign In
           </Button>
         </div>
       </form>
