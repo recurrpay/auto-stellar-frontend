@@ -163,6 +163,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               required
             />
           </div>
+          <a
+            href="/organization-signin"
+            className="text-sm text-muted-foreground hover:text-sky-600"
+          >
+            Sign in instead?
+          </a>
+
           <Button type="submit" disabled={isLoading}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
