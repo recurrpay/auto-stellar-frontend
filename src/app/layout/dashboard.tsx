@@ -9,6 +9,7 @@ import { api } from "~/utils/api";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { toast } from "@/components/ui/use-toast";
+import { Search } from "../components/ui/search";
 
 interface DashboardLayoutProps {
   type: "user" | "admin" | "empty" | "none";

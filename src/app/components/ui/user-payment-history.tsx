@@ -42,27 +42,27 @@ import {
 
 const data: Payment[] = [
   {
-    id: "m5gr84i9",
+    id: "0",
     amount: 316,
     email: "ken99@yahoo.com",
   },
   {
-    id: "3u1reuv4",
+    id: "1",
     amount: 242,
     email: "Abe45@gmail.com",
   },
   {
-    id: "derv1ws0",
+    id: "2",
     amount: 837,
     email: "Monserrat44@gmail.com",
   },
   {
-    id: "5kma53ae",
+    id: "3",
     amount: 874,
     email: "Silas22@gmail.com",
   },
   {
-    id: "bhqecj4p",
+    id: "4",
     amount: 721,
     email: "carmella@hotmail.com",
   },
