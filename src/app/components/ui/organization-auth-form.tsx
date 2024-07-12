@@ -46,7 +46,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             </Label>
             <Input
               id="email"
-              placeholder="enter your password"
+              placeholder="Enter your Password"
               type="password"
               autoCapitalize="none"
               autoComplete="email"
@@ -60,7 +60,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             </Label>
             <Input
               id="email"
-              placeholder="enter your logo"
+              placeholder="Link to your Logo"
               type="password"
               autoCapitalize="none"
               autoComplete="email"
@@ -74,7 +74,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             </Label>
             <Input
               id="email"
-              placeholder="enter your link"
+              placeholder="Enter your link"
               type="password"
               autoCapitalize="none"
               autoComplete="email"
