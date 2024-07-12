@@ -39,34 +39,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data: Payment[] = [
-  {
-    id: "0",
-    orgName: "Tech Solutions Inc.",
-    joined: "2023-03-15",
-  },
-  {
-    id: "1",
-    orgName: "Green Energy Co.",
-    joined: "2022-11-23",
-  },
-  {
-    id: "2",
-    orgName: "Healthcare Partners",
-    joined: "2021-07-05",
-  },
-  {
-    id: "3",
-    orgName: "EduTech Innovations",
-    joined: "2020-09-12",
-  },
-  {
-    id: "4",
-    orgName: "Finance Forward",
-    joined: "2019-06-28",
-  },
-];
-
 export type Payment = {
   id: string;
   orgName: string;
@@ -116,7 +88,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function OrganizationTable() {
+export function OrganizationTable({ data }: { data: Payment[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 import {
   StellarWalletsKit,
@@ -42,7 +43,26 @@ export default function AuthenticationPage() {
     localStorage.setItem("walletConnected", "true");
     localStorage.setItem("walletPublicKey", publicKey); // Store public key for later use
     setIsConnected(true);
-    router.push("/user-dashboard"); // Redirect to user dashboard after wallet is connected
+
+    // Sign in the user with the new API
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER}/auth/user/signin`,
+        {
+          authType: "WALLET_SIGNIN",
+          stellarAccountId: publicKey,
+          x: "x",
+          y: "y",
+        },
+      );
+      localStorage.setItem("user-token", response.data.access_token);
+
+      console.log(response.data); // Handle the response as needed
+      router.push("/user-dashboard"); // Redirect to user dashboard after wallet is connected
+    } catch (error) {
+      console.error("Error signing in:", error);
+      // Handle error (e.g., show a notification to the user)
+    }
   };
 
   const openModal = () => {
