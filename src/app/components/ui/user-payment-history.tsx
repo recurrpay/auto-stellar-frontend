@@ -40,34 +40,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data: Payment[] = [
-  {
-    id: "0",
-    amount: 316,
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "1",
-    amount: 242,
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "2",
-    amount: 837,
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "3",
-    amount: 874,
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "4",
-    amount: 721,
-    email: "carmella@hotmail.com",
-  },
-];
-
 export type Payment = {
   id: string;
   amount: number;
@@ -143,6 +115,7 @@ export const columns: ColumnDef<Payment>[] = [
 ];
 
 export function UserPayment() {
+  const [data, setData] = React.useState<Payment[]>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -169,7 +142,35 @@ export function UserPayment() {
       rowSelection,
     },
   });
+  React.useEffect(() => {
+    const fetchPayments = async () => {
+      const userProfile = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER}/profile`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("user-token")}`,
+          },
+        },
+      );
+      const userData = await userProfile.json();
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER}/payment/user/${userData.id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("user-token")}`,
+          },
+        },
+      );
+      const data = await response.json();
+      setData(data);
+    };
 
+    fetchPayments();
+  }, []);
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
