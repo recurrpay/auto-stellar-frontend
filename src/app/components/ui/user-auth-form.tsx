@@ -10,11 +10,11 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import ConnectButton from "./connect_wallet";
 import Connect from "./Connect";
-import { redirect } from "next/navigation";
-
+import { useRouter } from "next/navigation";
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [stellarAccountId, setStellarAccountId] = React.useState<string>("");
   const [formData, setFormData] = React.useState({
@@ -37,7 +37,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER}/auth/user/signup`,
+        `http://localhost:8000/auth/user/signup`,
         {
           authType: "USER_SIGNUP",
           email: formData.email,
@@ -49,7 +49,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       );
       localStorage.setItem("user-token", response.data.access_token);
       console.log(response); // Handle the response as needed
-      redirect("/user-dashboard");
+      router.push("/user-dashboard");
     } catch (error) {
       console.error("Error signing up:", error);
     } finally {

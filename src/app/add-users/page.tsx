@@ -15,23 +15,24 @@ import {
 
 interface UserInput {
   email: string;
-  exists: boolean; // Added exists property to UserInput interface
-  name?: string; // Optional name property
+  exists: boolean;
+  name?: string;
 }
 
 const Page: React.FC = () => {
   const [userInputs, setUserInputs] = useState<UserInput[]>([
     { email: "", exists: false },
   ]);
-  const [formData, setFormData] = useState({
-    email: "",
-  });
-  console.log("data", formData.email);
   const API_URL = "http://localhost:8000";
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const { value } = e.target;
+    const newInputs = [...userInputs];
+    newInputs[index].email = value;
+    setUserInputs(newInputs);
   };
 
   const handleCheckClick = async (index: number) => {
@@ -42,12 +43,30 @@ const Page: React.FC = () => {
       setUserInputs(
         userInputs.map((userInput, i) =>
           i === index
-            ? { ...userInput, exists: true, name: response.data.name }
+            ? { ...userInput, exists: true, name: response.data.Profile.name }
             : userInput,
         ),
       );
     } catch (error) {
       console.error("Update user error:", error);
+      throw error;
+    }
+  };
+
+  const handleAddUserClick = async (index: number) => {
+    localStorage.setItem("user-email", userInputs[index].email);
+    const { email } = userInputs[index];
+    console.log(email);
+    try {
+      const response = await axios.patch(
+        `http://localhost:8000/organization/user`,
+        {
+          userEmail: email,
+        },
+      );
+      console.log("Add user response:", response.data);
+    } catch (error) {
+      console.error("Add user error:", error);
       throw error;
     }
   };
@@ -69,7 +88,7 @@ const Page: React.FC = () => {
               <Input
                 placeholder="Enter user email"
                 value={input.email}
-                onChange={(e) => handleChange(index, "email", e.target.value)}
+                onChange={(e) => handleChange(e, index)}
               />
               <Button onClick={() => handleCheckClick(index)}>Check</Button>
             </div>
@@ -92,7 +111,9 @@ const Page: React.FC = () => {
                           <CardDescription>Name: {input.name}</CardDescription>
                         </h6>
                       )}
-                      <Button>Add User</Button>
+                      <Button onClick={() => handleAddUserClick(index)}>
+                        Add User
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
