@@ -34,11 +34,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import axiosInstance from "@/app/utils/apis";
 
-const columns: ColumnDef<any>[] = [
+type TOrgUser = {
+  createdAt: string;
+  user: {
+    id: number;
+    email: string;
+    Profile: {
+      name: string;
+      avatar: string | null;
+    };
+  };
+};
+
+type TOrgTableType = {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: string;
+};
+
+const columns: ColumnDef<TOrgTableType>[] = [
   {
     accessorKey: "id",
-    header: "Id",
+    header: "ID",
     cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
   },
   {
@@ -67,10 +87,25 @@ const columns: ColumnDef<any>[] = [
     ),
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Joining Date
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("createdAt")}</div>
+    ),
+  },
 ];
 
-export function UserTable({ userId }) {
-  const [data, setData] = useState([]);
+export function UserTable({ userId }: { userId: number }) {
+  const [data, setData] = useState<TOrgTableType[]>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -79,30 +114,25 @@ export function UserTable({ userId }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/user/${userId}/detailed`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("user-token")}`,
-            },
-          },
+        const response = await axiosInstance.get(
+          `http://localhost:8000/organization/users`,
         );
-        const data = response.data;
+        const data = response.data as TOrgUser[];
 
-        setData([
-          {
-            id: data.id,
-            name: data.Profile.name,
-            email: data.email,
-          },
-        ]);
+        setData(
+          data.map((item) => ({
+            id: item.user.id,
+            name: item.user.Profile.name,
+            email: item.user.email,
+            createdAt: item.createdAt,
+          })),
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchData();
+    void fetchData();
   }, [userId]);
 
   const table = useReactTable({
