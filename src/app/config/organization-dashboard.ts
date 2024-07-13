@@ -48,11 +48,6 @@ export const dashboardConfig: DashboardConfig = {
       icon: "home",
     },
     {
-      title: "Organization Payrolls",
-      href: "/organization-payroll-list",
-      icon: "home",
-    },
-    {
       title: "Organization Profile",
       href: "/organization-profile",
       icon: "home",
