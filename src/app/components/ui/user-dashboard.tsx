@@ -50,8 +50,9 @@ import {
   ChartTooltip,
   ChartContainer,
 } from "@/components/ui/chart";
+import Img from "next/image";
 
-export default function Dashboard() {
+export default function OrgDashboard() {
   return (
     <div className="flex min-h-screen flex-col bg-muted/40">
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -145,7 +146,7 @@ export default function Dashboard() {
               size="icon"
               className="overflow-hidden rounded-full"
             >
-              <img
+              <Img
                 src="/placeholder.svg"
                 width={36}
                 height={36}
@@ -181,7 +182,7 @@ export default function Dashboard() {
             <Card>
               <CardHeader className="pb-2">
                 <CardDescription>This Month</CardDescription>
-                <CardTitle className="text-4xl">$125,329</CardTitle>
+                <CardTitle className="text-3xl">$125,329</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">
@@ -195,7 +196,7 @@ export default function Dashboard() {
             <Card>
               <CardHeader className="pb-2">
                 <CardDescription>This Quarter</CardDescription>
-                <CardTitle className="text-4xl">$375,329</CardTitle>
+                <CardTitle className="text-3xl">$375,329</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">
@@ -209,7 +210,7 @@ export default function Dashboard() {
             <Card>
               <CardHeader className="pb-2">
                 <CardDescription>This Year</CardDescription>
-                <CardTitle className="text-4xl">$1,250,329</CardTitle>
+                <CardTitle className="text-2xl">$1,250,329</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-xs text-muted-foreground">

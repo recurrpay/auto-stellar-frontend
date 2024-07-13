@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Chart } from "@/app/components/ui/chart";
-import { Dashboard } from "@/app/components/ui/smallchart";
+import OrgDashboard from "@/app/components/ui/dashboard";
 import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/dashboard-layout";
 
@@ -19,7 +18,7 @@ const page = () => {
         text="Find all your visa application here"
         buttonLabel="New Visa Application"
       >
-        <Dashboard />
+        <OrgDashboard />
       </DashboardLayout>
     </>
   );

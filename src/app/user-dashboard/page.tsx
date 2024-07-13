@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Chart } from "@/app/components/ui/chart";
-import { SmallChart } from "@/app/components/ui/smallchart";
+import OrgDashboard from "@/app/components/ui/user-dashboard";
 import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/user-dashboard";
 
@@ -19,8 +19,7 @@ const page = () => {
         text="Find all your visa application here"
         buttonLabel="New Visa Application"
       >
-        <Chart />
-        <SmallChart />
+        <OrgDashboard />
       </DashboardLayout>
     </>
   );
