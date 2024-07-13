@@ -7,29 +7,6 @@ import { OrganizationTable } from "@/app/components/ui/orgTable";
 import axios from "axios";
 
 const Page = () => {
-  const [organisation, setOrganisation] = useState([]);
-
-  useEffect(() => {
-    const fetchOrganisation = async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER}/organisation`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("user-token")}`,
-          },
-        },
-      );
-      const data = await response.json();
-      setOrganisation(data);
-    };
-
-    fetchOrganisation();
-    console.log("organisation");
-    console.log(organisation);
-  }, []);
-
   return (
     <>
       <Head>
@@ -42,7 +19,7 @@ const Page = () => {
         text="Find all your visa application here"
         buttonLabel="New Visa Application"
       >
-        <OrganizationTable data={organisation} />
+        <OrganizationTable />
       </DashboardLayout>
     </>
   );

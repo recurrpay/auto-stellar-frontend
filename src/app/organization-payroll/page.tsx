@@ -85,14 +85,14 @@ const Page = () => {
       amount: Number(input.amount),
       token: input.token,
     }));
-
+    console.log("users", users);
     const payload = {
       name: payrollName,
       paymentType: paymentType === "one-time" ? {} : { recurring: true },
       paymentDate: formattedDate,
       users: users,
     };
-
+    console.log("payload", payload);
     try {
       const response = await axios.post(
         "http://localhost:8000/payroll",

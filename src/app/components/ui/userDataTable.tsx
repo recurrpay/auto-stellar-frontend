@@ -70,40 +70,10 @@ const columns: ColumnDef<any>[] = [
 ];
 
 export function UserTable({ userId }) {
-  const [data, setData] = useState([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/user/${userId}/detailed`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("user-token")}`,
-            },
-          },
-        );
-        const data = response.data;
-
-        setData([
-          {
-            id: data.id,
-            name: data.Profile.name,
-            email: data.email,
-          },
-        ]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [userId]);
 
   const table = useReactTable({
     data,

@@ -1,5 +1,7 @@
 "use client";
-import * as React from "react";
+
+import { React, useState, useEffect } from "react";
+import axios from "axios";
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -43,7 +45,6 @@ export type Payment = {
   id: string;
   orgName: string;
   joined: string;
-  //   status: "pending" | "processing" | "success" | "failed";
 };
 
 export const columns: ColumnDef<Payment>[] = [
@@ -88,14 +89,32 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function OrganizationTable({ data }: { data: Payment[] }) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+export function OrganizationTable({ userId }: { userId: string }) {
+  const [data, setData] = useState<Payment[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/payment/user/${17}`,
+        );
+        console.log("response", response);
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
+
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -115,6 +134,10 @@ export function OrganizationTable({ data }: { data: Payment[] }) {
       rowSelection,
     },
   });
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="m-2 w-[98%]">

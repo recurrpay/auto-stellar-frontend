@@ -18,12 +18,12 @@ export const userConfig: UserConfig = {
       icon: "home",
     },
     {
-      title: "Organizations",
+      title: "Organizations Joined",
       href: "/users-organizations",
       icon: "home",
     },
     {
-      title: "Payment History",
+      title: "Payment Received",
       href: "/user-payment-history",
       icon: "home",
     },
