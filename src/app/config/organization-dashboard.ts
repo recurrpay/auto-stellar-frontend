@@ -18,19 +18,23 @@ export const dashboardConfig: DashboardConfig = {
       icon: "home",
     },
     {
-      title: "Pay Employees ",
-      href: "/organization-payroll",
-      icon: "home",
-    },
-    {
       title: "Employees",
       href: "/organization-users",
       icon: "home",
     },
-
     {
       title: "Add Employees",
       href: "/add-users",
+      icon: "home",
+    },
+    {
+      title: "Payroll",
+      href: "/organization-payroll-list",
+      icon: "home",
+    },
+    {
+      title: "Add Payroll ",
+      href: "/organization-payroll",
       icon: "home",
     },
     {
@@ -39,13 +43,8 @@ export const dashboardConfig: DashboardConfig = {
       icon: "home",
     },
     {
-      title: "Payment History",
+      title: "Invoices",
       href: "/organization-payment-history",
-      icon: "home",
-    },
-    {
-      title: "Organization Payroll's",
-      href: "/organization-payroll-list",
       icon: "home",
     },
     {
