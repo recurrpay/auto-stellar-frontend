@@ -8,30 +8,8 @@ export type OrgUser = {
   avatar: string | null;
 };
 
-export type AddUserToOrgResponse = {
-  id: number;
-  userId: number;
-  orgId: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export async function addUserToOrg({
-  userEmail,
-}: {
-  userEmail: string;
-}): Promise<AddUserToOrgResponse> {
-  const response = await axiosInstance.patch(`/organization/user`, {
-    userEmail,
-  });
-
-  const data = response.data as AddUserToOrgResponse;
-
-  return data;
-}
-
-export async function getOrganizationUsers(): Promise<OrgUser[]> {
-  const response = await axiosInstance.get(`/organization/users`);
+export async function getOrgPayrolls(orgId: number): Promise<OrgUser[]> {
+  const response = await axiosInstance.get(`/payroll/org/${orgId}`);
 
   const orgUsers = response.data as {
     createdAt: string;
