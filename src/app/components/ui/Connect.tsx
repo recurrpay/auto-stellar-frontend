@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import {
   isConnected,
@@ -7,17 +8,14 @@ import {
   requestAccess,
   getPublicKey,
 } from "@stellar/freighter-api";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; // Ensure this path is correct
 
 interface ConnectProps {
-  stellarAccountId: string;
-  setStellarAccountId: React.Dispatch<React.SetStateAction<string>>;
+  formData: any;
+  handleKeyChange: (key: string) => void;
 }
 
-const Connect: React.FC<ConnectProps> = ({
-  stellarAccountId,
-  setStellarAccountId,
-}) => {
+const Connect: React.FC<ConnectProps> = ({ formData, handleKeyChange }) => {
   const [isFreighterInstalled, setIsFreighterInstalled] =
     useState<boolean>(false);
   const [isAppAllowed, setIsAppAllowed] = useState<boolean>(false);
@@ -36,7 +34,7 @@ const Connect: React.FC<ConnectProps> = ({
           if (allowed) {
             const key = await getPublicKey();
             setPublicKey(key);
-            setStellarAccountId(key);
+            handleKeyChange(key);
           }
         }
       } catch (e) {
@@ -57,7 +55,7 @@ const Connect: React.FC<ConnectProps> = ({
       if (isAppAllowed) {
         const key = await requestAccess();
         setPublicKey(key);
-        setStellarAccountId(key);
+        handleKeyChange(key);
       }
     } catch (e) {
       console.log(e);
@@ -67,13 +65,12 @@ const Connect: React.FC<ConnectProps> = ({
   return (
     <div>
       {isFreighterInstalled ? (
-        publicKey ? (
+        formData?.stellarAccountId ? (
           <div>
             <p className="flex items-center justify-center gap-4">
-              {stellarAccountId.substring(0, 20) +
+              {formData.stellarAccountId.substring(0, 20) +
                 "...." +
-                stellarAccountId.substring(36, 56)}
-              {/* <Button onClick={handleConnectWallet}>Change Wallet</Button> */}
+                formData.stellarAccountId.substring(36, 56)}
             </p>
           </div>
         ) : (

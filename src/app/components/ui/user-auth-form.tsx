@@ -2,26 +2,28 @@
 
 import * as React from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
-import { cn } from "@/app/lib/utils";
-import { Icons } from "@/app/components/icons";
-import { Button } from "@/app/components/ui/button";
-import { Input } from "@/app/components/ui/input";
-import { Label } from "@/app/components/ui/label";
-import ConnectButton from "./connect_wallet";
-import Connect from "./Connect";
-import { redirect } from "next/navigation";
+import { cn } from "@/app/lib/utils"; // Ensure this path is correct
+import { Icons } from "@/app/components/icons"; // Ensure this path is correct
+import { Button } from "@/app/components/ui/button"; // Ensure this path is correct
+import { Input } from "@/app/components/ui/input"; // Ensure this path is correct
+import { Label } from "@/app/components/ui/label"; // Ensure this path is correct
+import Connect from "./Connect"; // Ensure this path is correct
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [stellarAccountId, setStellarAccountId] = React.useState<string>("");
   const [formData, setFormData] = React.useState({
-    name: "",
+    authType: "USER_SIGNUP",
+    stellarAccountId: "",
     email: "",
-    password: "",
-    wallet: "",
+    name: "",
+    avatar: "",
+    x: "x",
+    y: "y",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,26 +34,45 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     }));
   };
 
+  const handleKeyChange = (key: string) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      stellarAccountId: key,
+    }));
+  };
+
+  async function signup(data: any) {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER}/auth/user/signup`,
+        data,
+      );
+      console.log("Signup response:", response);
+
+      localStorage.setItem("user-token", response.data.access_token);
+      return response;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Signup error:", error.response?.data || error.message);
+      } else {
+        console.error("Unexpected error:", error);
+      }
+      throw error;
+    }
+  }
+
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER}/auth/user/signup`,
-        {
-          authType: "USER_SIGNUP",
-          email: formData.email,
-          name: formData.name,
-          x: "x",
-          y: "y",
-          stellarAccountId: stellarAccountId,
-        },
-      );
-      localStorage.setItem("user-token", response.data.access_token);
-      console.log(response); // Handle the response as needed
-      redirect("/user-dashboard");
+      console.log("Form data:", formData);
+
+      const response = await signup(formData);
+      console.log("Signup successful:", response);
+      router.push("/user-dashboard");
     } catch (error) {
-      console.error("Error signing up:", error);
+      console.error("Signup failed:", error);
+      // Handle signup error, e.g., show an error message
     } finally {
       setIsLoading(false);
     }
@@ -71,7 +92,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               type="text"
               required
               autoCapitalize="none"
-              autoComplete="text"
+              autoComplete="off"
               autoCorrect="off"
               disabled={isLoading}
               value={formData.name}
@@ -88,7 +109,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               type="email"
               required
               autoCapitalize="none"
-              autoComplete="email"
+              autoComplete="off"
               autoCorrect="off"
               disabled={isLoading}
               value={formData.email}
@@ -96,19 +117,19 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             />
           </div>
           <div className="grid gap-4">
-            <Label className="text-black" htmlFor="password">
-              Password
+            <Label className="text-black" htmlFor="avatar">
+              Avatar
             </Label>
             <Input
-              id="password"
-              placeholder="Enter your Password"
-              type="password"
+              id="avatar"
+              placeholder="Enter link to Avatar"
+              type="text"
               required
               autoCapitalize="none"
-              autoComplete="current-password"
+              autoComplete="off"
               autoCorrect="off"
               disabled={isLoading}
-              value={formData.password}
+              value={formData.avatar}
               onChange={handleChange}
             />
           </div>
@@ -119,11 +140,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               </Label>
             </div>
             <div>
-              {/* <ConnectButton /> */}
-              <Connect
-                stellarAccountId={stellarAccountId}
-                setStellarAccountId={setStellarAccountId}
-              />
+              <Connect formData={formData} handleKeyChange={handleKeyChange} />
             </div>
           </div>
           <a

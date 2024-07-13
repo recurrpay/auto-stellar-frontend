@@ -15,29 +15,41 @@ import {
 
 interface UserInput {
   email: string;
-  exists: boolean; // Added exists property to UserInput interface
-  name?: string; // Optional name property
+  exists: boolean;
+  name?: string;
 }
 
 const Page: React.FC = () => {
   const [userInputs, setUserInputs] = useState<UserInput[]>([
     { email: "", exists: false },
   ]);
-  const [formData, setFormData] = useState({
-    email: "",
-  });
-  console.log("data", formData.email);
-  const API_URL = "http://localhost:8000";
+  const addUserToOrganisation = async () => {
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_SERVER}/organization/user`,
+        {
+          email: userInputs[0].email,
+        },
+      );
+      console.log("Add user response:", response.data);
+    } catch (error) {
+      console.error("Add user error:", error);
+      throw error;
+    }
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleChange = (index: number, name: string, value: string) => {
+    const newUserInputs = [...userInputs];
+    newUserInputs[index] = { ...newUserInputs[index], [name]: value };
+    setUserInputs(newUserInputs);
   };
 
   const handleCheckClick = async (index: number) => {
     const { email } = userInputs[index];
     try {
-      const response = await axios.get(`${API_URL}/user/email/${email}`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER}/user/email/${email}`,
+      );
       console.log("Update user response:", response.data);
       setUserInputs(
         userInputs.map((userInput, i) =>
@@ -92,7 +104,7 @@ const Page: React.FC = () => {
                           <CardDescription>Name: {input.name}</CardDescription>
                         </h6>
                       )}
-                      <Button>Add User</Button>
+                      <Button onClick={addUserToOrganisation}>Add User</Button>
                     </div>
                   </CardContent>
                 </Card>
