@@ -83,8 +83,13 @@ const Page = () => {
         text="Find all your visa application here"
         buttonLabel="New Visa Application"
       >
-        <div className="flex gap-[115px]">
-          <div>
+        <div className="flex gap-[11px]">
+          <Input
+            className="m-[30px] w-[24rem]"
+            placeholder="Enter payroll name"
+          />
+
+          <div className="mt-[5px]">
             <Popover>
               <PopoverTrigger asChild>
                 <Button
