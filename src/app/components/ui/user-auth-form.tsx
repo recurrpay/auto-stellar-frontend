@@ -11,11 +11,10 @@ import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import ConnectButton from "./connect_wallet";
 import Connect from "./Connect";
-import { useRouter } from "next/navigation";
+
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const router = useRouter();
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [formData, setFormData] = React.useState({
@@ -46,18 +45,31 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   async function signup(data: any) {
     try {
       const response = await axios.post(
-        `http://localhost:8000/auth/user/signup`,
-        {
-          authType: "USER_SIGNUP",
-          email: formData.email,
-          name: formData.name,
-          x: "x",
-          y: "y",
-          stellarAccountId: stellarAccountId,
-        },
+        `${process.env.NEXT_PUBLIC_SERVER}/auth/user/signup`,
+        data,
       );
+      console.log("Signup response:", response);
+
       localStorage.setItem("user-token", response.data.access_token);
-      console.log(response); // Handle the response as needed
+      return response;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Signup error:", error.response?.data || error.message);
+      } else {
+        console.error("Unexpected error:", error);
+      }
+      throw error;
+    }
+  }
+
+  async function onSubmit(event: React.SyntheticEvent) {
+    event.preventDefault();
+    setIsLoading(true);
+    try {
+      console.log("Form data:", formData);
+
+      const response = await signup(formData);
+      console.log("Signup successful:", response);
       router.push("/user-dashboard");
     } catch (error) {
       console.error("Signup failed:", error);

@@ -31,10 +31,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     try {
       const response = await axios.post(`${API_URL}/auth/org/signin`, data);
       console.log("Signup response:", response.data);
-      const test = localStorage.setItem(
-        "sigin_token",
-        response.data.access_token,
-      );
+      const test = localStorage.setItem("token    ", response.data.access_token);
       console.log("token", test);
 
       return response.data;

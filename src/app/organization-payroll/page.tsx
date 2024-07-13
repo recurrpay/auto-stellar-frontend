@@ -7,6 +7,8 @@ import { RocketIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/app/components/ui/alert";
 import { Icons } from "@/app/components/icons";
 import { Chart } from "@/app/components/ui/chart";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 import { SmallChart } from "@/app/components/ui/smallchart";
 import {
   Table,
@@ -28,7 +30,7 @@ import {
 } from "@/app/components/ui/dropdown-menu";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
-
+import axios from "axios";
 import { cn } from "@/app/lib/utils";
 import { Calendar } from "@/app/components/ui/calendar";
 import {
@@ -36,19 +38,23 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/app/components/ui/popover";
+// import { ToastAction } from "@/components/ui/toast";
+
 import Link from "next/link";
 import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/dashboard-layout";
 import { formatDate } from "../lib/utils";
-import { toast } from "../components/ui/toast";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 import { Label } from "@/app/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const Page = () => {
-  const [date, setDate] = React.useState<Date>();
+  const { toast } = useToast();
 
+  const [date, setDate] = React.useState<Date>();
+  const [payrollName, setPayrollName] = useState("");
+  const [paymentType, setPaymentType] = useState("one-time");
   const [userInputs, setUserInputs] = useState([
     { email: "", amount: "", token: "XLM" },
   ]);
@@ -72,6 +78,49 @@ const Page = () => {
     );
   };
 
+  const handleSubmit = async () => {
+    const formattedDate = date?.toISOString();
+    const users = userInputs.map((input) => ({
+      email: input.email,
+      amount: Number(input.amount),
+      token: input.token,
+    }));
+
+    const payload = {
+      name: payrollName,
+      paymentType: paymentType === "one-time" ? {} : { recurring: true },
+      paymentDate: formattedDate,
+      users: users,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/payroll",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("user-token")}`,
+          },
+        },
+      );
+
+      console.log("Payroll created:", response.data);
+      toast({
+        title: "Success",
+        description: "Payroll created successfully!",
+      });
+    } catch (error) {
+      console.error("Error creating payroll:", error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    }
+  };
+
   return (
     <>
       <Head>
@@ -87,6 +136,8 @@ const Page = () => {
           <Input
             className="m-[30px] w-[24rem]"
             placeholder="Enter payroll name"
+            value={payrollName}
+            onChange={(e) => setPayrollName(e.target.value)}
           />
 
           <div className="mt-[5px]">
@@ -119,13 +170,17 @@ const Page = () => {
             </Popover>
           </div>
           <div className="pt-[36px]">
-            <RadioGroup defaultValue="comfortable" className="flex flex-row">
+            <RadioGroup
+              defaultValue="one-time"
+              className="flex flex-row"
+              onValueChange={setPaymentType}
+            >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="comfortable" id="r2" />
+                <RadioGroupItem value="one-time" id="r2" />
                 <Label htmlFor="r2">One Time</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="compact" id="r3" />
+                <RadioGroupItem value="recurring" id="r3" />
                 <Label htmlFor="r3">Recurring Pay</Label>
               </div>
             </RadioGroup>
@@ -172,12 +227,12 @@ const Page = () => {
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button onClick={handleAddClick} className="">
+            <Button onClick={handleAddClick}>
               <Icons.add />
             </Button>
           </div>
         ))}
-        <Button className="">Create Payroll</Button>
+        <Button onClick={handleSubmit}>Create Payroll</Button>
       </DashboardLayout>
     </>
   );

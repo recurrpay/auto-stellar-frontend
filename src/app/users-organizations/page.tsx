@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Chart } from "@/app/components/ui/chart";
-import { SmallChart } from "@/app/components/ui/smallchart";
 import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/user-dashboard";
 import { OrganizationTable } from "@/app/components/ui/orgTable";
+import axios from "axios";
 
 const Page = () => {
   const [organisation, setOrganisation] = useState([]);
@@ -30,6 +29,7 @@ const Page = () => {
     console.log("organisation");
     console.log(organisation);
   }, []);
+
   return (
     <>
       <Head>

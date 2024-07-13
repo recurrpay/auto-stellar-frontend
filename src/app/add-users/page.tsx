@@ -70,6 +70,8 @@ const Page: React.FC = () => {
           userEmail: email,
         },
       );
+      toast.success("User added successfully");
+
       console.log("Add user response:", response.data);
     } catch (error) {
       toast.error("Error adding user");
