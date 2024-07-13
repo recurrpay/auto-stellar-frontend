@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+
 import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type SortingState,
+  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -17,14 +17,13 @@ import {
 } from "@tanstack/react-table";
 
 import { Button } from "@/app/components/ui/button";
-import { Checkbox } from "@/app/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
+
 import { Input } from "@/app/components/ui/input";
 import {
   Table,
@@ -34,28 +33,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import axiosInstance from "@/app/utils/apis";
 
-type TOrgUser = {
-  createdAt: string;
-  user: {
-    id: number;
-    email: string;
-    Profile: {
-      name: string;
-      avatar: string | null;
-    };
-  };
-};
+import { getOrganizationUsers, type OrgUser } from "@/apis/organization";
 
-type TOrgTableType = {
-  id: number;
-  name: string;
-  email: string;
-  createdAt: string;
-};
-
-const columns: ColumnDef<TOrgTableType>[] = [
+const columns: ColumnDef<OrgUser>[] = [
   {
     accessorKey: "id",
     header: "ID",
@@ -105,7 +86,7 @@ const columns: ColumnDef<TOrgTableType>[] = [
 ];
 
 export function UserTable({ userId }: { userId: number }) {
-  const [data, setData] = useState<TOrgTableType[]>([]);
+  const [data, setData] = useState<OrgUser[]>([]);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -114,19 +95,8 @@ export function UserTable({ userId }: { userId: number }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get(
-          `http://localhost:8000/organization/users`,
-        );
-        const data = response.data as TOrgUser[];
-
-        setData(
-          data.map((item) => ({
-            id: item.user.id,
-            name: item.user.Profile.name,
-            email: item.user.email,
-            createdAt: item.createdAt,
-          })),
-        );
+        const data = await getOrganizationUsers();
+        setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
