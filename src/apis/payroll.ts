@@ -8,8 +8,11 @@ export type OrgUser = {
   avatar: string | null;
 };
 
-export async function getOrgPayrolls(orgId: number): Promise<OrgUser[]> {
-  const response = await axiosInstance.get(`/payroll/org/${orgId}`);
+export async function getOrgPayrolls(): Promise<OrgUser[]> {
+  const response = await axiosInstance.get(
+    `${process.env.NEXT_PUBLIC_SERVER}/payroll/org/list`,
+  );
+  console.log("response", response.data);
 
   const orgUsers = response.data as {
     createdAt: string;

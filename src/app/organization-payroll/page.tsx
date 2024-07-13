@@ -91,7 +91,7 @@ const Page = () => {
       const response = await axiosInstance.post("/payroll", payload, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("user-token")}`,
+          Authorization: `Bearer ${localStorage.getItem("org_token")}`,
         },
       });
 
