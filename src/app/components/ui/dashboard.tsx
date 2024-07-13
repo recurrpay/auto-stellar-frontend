@@ -51,7 +51,8 @@ import {
   ChartTooltip,
   ChartContainer,
 } from "@/components/ui/chart";
-import FundModal from "@/app/components/ui/dialoge";
+import FundModal from "@/app/components/modals/FundModal";
+
 export default function OrgDashboard() {
   return (
     <div className="flex min-h-screen flex-col bg-muted/40">
@@ -116,7 +117,7 @@ export default function OrgDashboard() {
             </nav>
           </SheetContent>
         </Sheet>
-        <Breadcrumb className="hidden md:flex">
+        <Breadcrumb className="mb-5 hidden md:flex">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
@@ -131,18 +132,18 @@ export default function OrgDashboard() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <div className="relative ml-auto flex-1 md:grow-0">
+        {/* <div className="relative ml-auto flex-1 md:grow-0">
           <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="search"
             placeholder="Search..."
             className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
           />
-        </div>
+        </div> */}
       </header>
-      <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-        <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+      <main className="flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+        <div className="">
+          <div className="flex gap-4">
             <Card className="sm:col-span-2">
               <CardHeader className="pb-3">
                 <CardTitle>Funds</CardTitle>
@@ -164,9 +165,6 @@ export default function OrgDashboard() {
                   +10% from last month
                 </div>
               </CardContent>
-              <CardFooter>
-                <Progress value={10} aria-label="10% increase" />
-              </CardFooter>
             </Card>
             <Card>
               <CardHeader className="pb-2">
@@ -178,9 +176,6 @@ export default function OrgDashboard() {
                   +10% from last month
                 </div>
               </CardContent>
-              <CardFooter>
-                <Progress value={10} aria-label="10% increase" />
-              </CardFooter>
             </Card>
             <Card>
               <CardHeader className="pb-2">
@@ -192,9 +187,6 @@ export default function OrgDashboard() {
                   +15% from last quarter
                 </div>
               </CardContent>
-              <CardFooter>
-                <Progress value={15} aria-label="15% increase" />
-              </CardFooter>
             </Card>
             <Card>
               <CardHeader className="pb-2">
@@ -206,217 +198,214 @@ export default function OrgDashboard() {
                   +20% from last year
                 </div>
               </CardContent>
-              <CardFooter>
-                <Progress value={20} aria-label="20% increase" />
-              </CardFooter>
             </Card>
           </div>
-          <Tabs defaultValue="revenue">
-            <div className="flex items-center">
-              <TabsList>
-                <TabsTrigger value="revenue">Revenue</TabsTrigger>
-                <TabsTrigger value="expenses">Expenses</TabsTrigger>
-                <TabsTrigger value="profit">Profit</TabsTrigger>
-              </TabsList>
-              <div className="ml-auto flex items-center gap-2">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-7 gap-1 text-sm"
-                    >
-                      <FilterIcon className="h-3.5 w-3.5" />
-                      <span className="sr-only sm:not-sr-only">Filter</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem checked>
-                      This Month
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>
-                      This Quarter
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>
-                      This Year
-                    </DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="h-7 gap-1 text-sm"
-                >
-                  <DownloadIcon className="h-3.5 w-3.5" />
-                  <span className="sr-only sm:not-sr-only">Export</span>
-                </Button>
-              </div>
-            </div>
-            <TabsContent value="revenue">
-              <Card>
-                <CardHeader className="px-7">
-                  <CardTitle>Revenue</CardTitle>
-                  <CardDescription>Monthly revenue trends.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <LinechartChart className="aspect-[9/4]" />
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="expenses">
-              <Card>
-                <CardHeader className="px-7">
-                  <CardTitle>Expenses</CardTitle>
-                  <CardDescription>Monthly expense trends.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <LinechartChart className="aspect-[9/4]" />
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="profit">
-              <Card>
-                <CardHeader className="px-7">
-                  <CardTitle>Profit</CardTitle>
-                  <CardDescription>Monthly profit trends.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <LinechartChart className="aspect-[9/4]" />
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
-        <div>
-          <Card>
-            <CardHeader className="flex flex-row items-start bg-muted/50">
-              <div className="grid gap-0.5">
-                <CardTitle className="group flex items-center gap-2 text-lg">
-                  Recent Transactions
+          <div className="my-10">
+            <Tabs defaultValue="revenue">
+              <div className="flex items-center">
+                <TabsList>
+                  <TabsTrigger value="revenue">Revenue</TabsTrigger>
+                  <TabsTrigger value="expenses">Expenses</TabsTrigger>
+                  <TabsTrigger value="profit">Profit</TabsTrigger>
+                </TabsList>
+                <div className="ml-auto flex items-center gap-2">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="h-7 w-full gap-1 text-sm"
+                      >
+                        <FilterIcon className="h-3.5 w-3.5" />
+                        <span className="sr-only sm:not-sr-only">Filter</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuCheckboxItem checked>
+                        This Month
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        This Quarter
+                      </DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem>
+                        This Year
+                      </DropdownMenuCheckboxItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                   <Button
-                    size="icon"
+                    size="sm"
                     variant="outline"
-                    className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
+                    className="h-7 gap-1 text-sm"
                   >
-                    <DownloadIcon className="h-3 w-3" />
-                    <span className="sr-only">Export Transactions</span>
+                    <DownloadIcon className="h-3.5 w-3.5" />
+                    <span className="sr-only sm:not-sr-only">Export</span>
                   </Button>
-                </CardTitle>
-                <CardDescription>Last 10 transactions</CardDescription>
+                </div>
               </div>
-              <div className="ml-auto flex items-center gap-1">
-                <Button size="sm" variant="outline" className="h-8 gap-1">
-                  <FilterIcon className="h-3.5 w-3.5" />
-                  <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-                    Filter Transactions
-                  </span>
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="p-6 text-sm">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>2023-04-01</TableCell>
-                    <TableCell>Payroll</TableCell>
-                    <TableCell className="text-right">$50,000.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-03-25</TableCell>
-                    <TableCell>Rent Payment</TableCell>
-                    <TableCell className="text-right">$5,000.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-03-15</TableCell>
-                    <TableCell>Supplier Invoice</TableCell>
-                    <TableCell className="text-right">$12,500.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-03-05</TableCell>
-                    <TableCell>Utility Bill</TableCell>
-                    <TableCell className="text-right">$1,200.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-02-28</TableCell>
-                    <TableCell>Client Payment</TableCell>
-                    <TableCell className="text-right">$25,000.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-02-20</TableCell>
-                    <TableCell>Advertising Expense</TableCell>
-                    <TableCell className="text-right">$3,500.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-02-10</TableCell>
-                    <TableCell>Payroll</TableCell>
-                    <TableCell className="text-right">$52,000.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-01-31</TableCell>
-                    <TableCell>Rent Payment</TableCell>
-                    <TableCell className="text-right">$5,000.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-01-20</TableCell>
-                    <TableCell>Supplier Invoice</TableCell>
-                    <TableCell className="text-right">$8,000.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>2023-01-10</TableCell>
-                    <TableCell>Utility Bill</TableCell>
-                    <TableCell className="text-right">$1,100.00</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary">Pending</Badge>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </CardContent>
-            <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
-              <div className="text-xs text-muted-foreground">
-                Last updated <time dateTime="2023-04-01">April 1, 2023</time>
-              </div>
-              <Pagination className="ml-" />
-            </CardFooter>
-          </Card>
+              <TabsContent value="revenue">
+                <Card>
+                  <CardHeader className="px-7">
+                    <CardTitle>Revenue</CardTitle>
+                    <CardDescription>Monthly revenue trends.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <LinechartChart className="aspect-[9/4]" />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="expenses">
+                <Card>
+                  <CardHeader className="px-7">
+                    <CardTitle>Expenses</CardTitle>
+                    <CardDescription>Monthly expense trends.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <LinechartChart className="aspect-[9/4]" />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="profit">
+                <Card>
+                  <CardHeader className="px-7">
+                    <CardTitle>Profit</CardTitle>
+                    <CardDescription>Monthly profit trends.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <LinechartChart className="aspect-[9/4]" />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
+        <div></div>
+        <Card>
+          <CardHeader className="flex flex-row items-start">
+            <div className="grid gap-0.5">
+              <CardTitle className="group flex items-center gap-2 text-lg">
+                Recent Transactions
+                <Button
+                  size="icon"
+                  variant="outline"
+                  className="h-6 w-6 opacity-0 transition-opacity group-hover:opacity-100"
+                >
+                  <DownloadIcon className="h-3 w-3" />
+                  <span className="sr-only">Export Transactions</span>
+                </Button>
+              </CardTitle>
+              <CardDescription>Last 10 transactions</CardDescription>
+            </div>
+            <div className="ml-auto flex items-center gap-1">
+              <Button size="sm" variant="outline" className="h-8 gap-1">
+                <FilterIcon className="h-3.5 w-3.5" />
+                <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
+                  Filter Transactions
+                </span>
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="p-6 text-sm">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Amount</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell>2023-04-01</TableCell>
+                  <TableCell>Payroll</TableCell>
+                  <TableCell className="text-right">$50,000.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2023-03-25</TableCell>
+                  <TableCell>Rent Payment</TableCell>
+                  <TableCell className="text-right">$5,000.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2023-03-15</TableCell>
+                  <TableCell>Supplier Invoice</TableCell>
+                  <TableCell className="text-right">$12,500.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2023-03-05</TableCell>
+                  <TableCell>Utility Bill</TableCell>
+                  <TableCell className="text-right">$1,200.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2023-02-28</TableCell>
+                  <TableCell>Client Payment</TableCell>
+                  <TableCell className="text-right">$25,000.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2023-02-20</TableCell>
+                  <TableCell>Advertising Expense</TableCell>
+                  <TableCell className="text-right">$3,500.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2023-02-10</TableCell>
+                  <TableCell>Payroll</TableCell>
+                  <TableCell className="text-right">$52,000.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2023-01-31</TableCell>
+                  <TableCell>Rent Payment</TableCell>
+                  <TableCell className="text-right">$5,000.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2023-01-20</TableCell>
+                  <TableCell>Supplier Invoice</TableCell>
+                  <TableCell className="text-right">$8,000.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>2023-01-10</TableCell>
+                  <TableCell>Utility Bill</TableCell>
+                  <TableCell className="text-right">$1,100.00</TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">Pending</Badge>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </CardContent>
+          <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+            <div className="text-xs text-muted-foreground">
+              Last updated <time dateTime="2023-04-01">April 1, 2023</time>
+            </div>
+            <Pagination className="ml-" />
+          </CardFooter>
+        </Card>
       </main>
     </div>
   );
@@ -568,7 +557,7 @@ function LinechartChart(props) {
           <Line
             dataKey="desktop"
             type="natural"
-            stroke="var(--color-desktop)"
+            stroke="black"
             strokeWidth={2}
             dot={false}
           />
