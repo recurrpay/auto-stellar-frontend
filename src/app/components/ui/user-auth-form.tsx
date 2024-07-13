@@ -35,7 +35,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     setIsLoading(true);
-
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER}/auth/user/signup`,
@@ -127,6 +126,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               />
             </div>
           </div>
+          <a
+            href="/user-signin"
+            className="text-sm text-muted-foreground hover:text-sky-600"
+          >
+            Sign in instead?
+          </a>
           <Button type="submit" disabled={isLoading}>
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

@@ -28,9 +28,6 @@ export function MainNav({ items, children }: MainNavProps) {
         <div>
           <Search />
         </div>
-        <span className="hidden font-bold sm:inline-block">
-          {siteConfig.name}
-        </span>
       </Link>
 
       <button
