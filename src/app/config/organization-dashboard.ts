@@ -43,8 +43,13 @@ export const dashboardConfig: DashboardConfig = {
       icon: "home",
     },
     {
-      title: "Invoices",
+      title: "Payment Records",
       href: "/organization-payment-history",
+      icon: "home",
+    },
+    {
+      title: "Organization Payrolls",
+      href: "/organization-payroll-list",
       icon: "home",
     },
     {

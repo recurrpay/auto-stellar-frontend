@@ -35,8 +35,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     try {
       const response = await axios.post(`${API_URL}/auth/org/signup`, data);
       console.log("Signup response:", response.data);
-      const test = localStorage.setItem("token", response.data.access_token);
-      console.log("token", test);
+      const test = localStorage.setItem(
+        "org_token",
+        response.data.access_token,
+      );
+      console.log("org_token", test);
 
       return response.data;
     } catch (error) {

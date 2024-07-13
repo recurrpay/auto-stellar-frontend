@@ -1,24 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { DashboardShell } from "@/app/components/shell";
-import { DashboardHeader } from "@/app/components/header";
-import { RocketIcon } from "@radix-ui/react-icons";
-import { Alert, AlertDescription, AlertTitle } from "@/app/components/ui/alert";
+import React, { useEffect, useState } from "react";
 import { Icons } from "@/app/components/icons";
-import { Chart } from "@/app/components/ui/chart";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
-import { SmallChart } from "@/app/components/ui/smallchart";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/app/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,7 +15,6 @@ import {
 } from "@/app/components/ui/dropdown-menu";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
-import axios from "axios";
 import { cn } from "@/app/lib/utils";
 import { Calendar } from "@/app/components/ui/calendar";
 import {
@@ -38,39 +22,49 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/app/components/ui/popover";
-// import { ToastAction } from "@/components/ui/toast";
-
-import Link from "next/link";
 import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/dashboard-layout";
-import { formatDate } from "../lib/utils";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 import { Label } from "@/app/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { getOrganizationUsers, type OrgUser } from "@/apis/organization";
+import { UserSelectDropdown } from "../components/user/user-select";
+import axiosInstance from "../utils/apis";
 
 const Page = () => {
   const { toast } = useToast();
 
   const [date, setDate] = React.useState<Date>();
   const [payrollName, setPayrollName] = useState("");
-  const [paymentType, setPaymentType] = useState("one-time");
-  const [userInputs, setUserInputs] = useState([
-    { email: "", amount: "", token: "XLM" },
-  ]);
+  const [paymentType, setPaymentType] = useState<"RECURRING" | "ONE_TIME">(
+    "RECURRING",
+  );
+  const [userInputs, setUserInputs] = useState<
+    {
+      id: number | null;
+      amount: string;
+      token: string;
+    }[]
+  >([{ id: null, amount: "", token: "XLM" }]);
+  const [orgUsers, setOrgUsers] = useState<OrgUser[]>([]);
 
   const handleAddClick = () => {
     setUserInputs([
       ...userInputs,
       {
-        email: "",
+        id: null,
         amount: "",
         token: "XLM",
       },
     ]);
   };
 
-  const handleInputChange = (index: number, key: string, value: string) => {
+  const handleInputChange = (
+    index: number,
+    key: string,
+    value: number | null,
+  ) => {
     setUserInputs(
       userInputs.map((userInput, i) =>
         i === index ? { ...userInput, [key]: value } : userInput,
@@ -81,29 +75,25 @@ const Page = () => {
   const handleSubmit = async () => {
     const formattedDate = date?.toISOString();
     const users = userInputs.map((input) => ({
-      email: input.email,
+      id: input.id,
       amount: Number(input.amount),
       token: input.token,
     }));
     console.log("users", users);
     const payload = {
       name: payrollName,
-      paymentType: paymentType === "one-time" ? {} : { recurring: true },
+      paymentType: paymentType,
       paymentDate: formattedDate,
       users: users,
     };
     console.log("payload", payload);
     try {
-      const response = await axios.post(
-        "http://localhost:8000/payroll",
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("user-token")}`,
-          },
+      const response = await axiosInstance.post("/payroll", payload, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("user-token")}`,
         },
-      );
+      });
 
       console.log("Payroll created:", response.data);
       toast({
@@ -121,6 +111,21 @@ const Page = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getOrganizationUsers();
+        console.log(data);
+
+        setOrgUsers(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    void fetchData();
+  }, []);
+
   return (
     <>
       <Head>
@@ -131,6 +136,7 @@ const Page = () => {
         heading="Visa Applications"
         text="Find all your visa application here"
         buttonLabel="New Visa Application"
+        loading={false}
       >
         <div className="flex gap-[11px]">
           <Input
@@ -165,45 +171,48 @@ const Page = () => {
                   selected={date}
                   onSelect={setDate}
                   initialFocus
+                  fromDate={new Date()}
                 />
               </PopoverContent>
             </Popover>
           </div>
           <div className="pt-[36px]">
+            {/* TODO: Fix type */}
             <RadioGroup
               defaultValue="one-time"
               className="flex flex-row"
               onValueChange={setPaymentType}
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="one-time" id="r2" />
-                <Label htmlFor="r2">One Time</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="recurring" id="r3" />
+                <RadioGroupItem value="RECURRING" id="r3" />
                 <Label htmlFor="r3">Recurring Pay</Label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="ONE_TIME" id="r2" />
+                <Label htmlFor="r2">One Time</Label>
               </div>
             </RadioGroup>
           </div>
         </div>
         {userInputs.map((input, index) => (
           <div key={index} className="m-6 flex gap-5">
-            <Input
-              className="w-[30rem]"
-              placeholder="Enter user email"
-              value={input.email}
-              onChange={(e) =>
-                handleInputChange(index, "email", e.target.value)
-              }
+            <UserSelectDropdown
+              users={orgUsers}
+              value={input.id}
+              setValue={(val) => handleInputChange(index, "id", val)}
             />
+
             <Input
               className="w-[30rem]"
               placeholder="Enter Amount Payable"
+              type="number"
               value={input.amount}
               onChange={(e) =>
-                handleInputChange(index, "amount", e.target.value)
+                handleInputChange(index, "amount", parseFloat(e.target.value))
               }
             />
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">Token to Transfer</Button>

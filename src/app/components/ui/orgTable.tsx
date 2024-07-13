@@ -33,7 +33,6 @@ import {
   TableHead,
   TableRow,
 } from "@/components/ui/table";
-import { set } from "date-fns";
 
 export type Payment = {
   id: string;
@@ -96,12 +95,19 @@ export function OrganizationTable() {
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem("org_token")}`,
             },
           },
         );
-        setData(response.data);
-        console.log("Data fetched:", response.data);
+
+        const fetchedData = response.data.map((item: any) => ({
+          id: item.organisation.id.toString(),
+          orgName: item.organisation.OrgProfile.name, // Adjust this according to the actual structure
+          joined: new Date(item.createdAt).toLocaleDateString(),
+        }));
+
+        setData(fetchedData);
+        console.log("Data fetched:", fetchedData);
       } catch (error) {
         setError(error);
       } finally {
