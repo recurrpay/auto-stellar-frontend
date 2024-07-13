@@ -50,7 +50,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       );
       console.log("Signup response:", response);
 
-      localStorage.setItem("user-token", response.data.access_token);
+      const test = localStorage.setItem("token", response.data.access_token);
+      console.log("test", test);
       return response;
     } catch (error) {
       if (axios.isAxiosError(error)) {

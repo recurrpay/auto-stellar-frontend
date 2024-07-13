@@ -22,7 +22,8 @@ export default function AuthenticationPage() {
           y: "y",
         },
       );
-      localStorage.setItem("user-token", response.data.access_token);
+      console.log(response);
+      localStorage.setItem("token", response.data.access_token);
       console.log(response);
       router.push("/user-dashboard");
     }

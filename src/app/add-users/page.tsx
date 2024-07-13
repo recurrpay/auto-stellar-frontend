@@ -78,7 +78,6 @@ const Page: React.FC = () => {
       console.error("Add user error:", error);
     }
   };
-
   return (
     <>
       <Head>
