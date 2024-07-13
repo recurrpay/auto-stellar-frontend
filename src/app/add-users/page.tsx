@@ -5,6 +5,9 @@ import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/dashboard-layout";
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axiosInstance from "@/app/utils/apis";
 import {
   Card,
   CardContent,
@@ -15,6 +18,8 @@ import {
 
 interface UserInput {
   email: string;
+  exists: boolean;
+  name?: string;
   exists: boolean;
   name?: string;
 }
@@ -38,7 +43,9 @@ const Page: React.FC = () => {
   const handleCheckClick = async (index: number) => {
     const { email } = userInputs[index];
     try {
-      const response = await axios.get(`${API_URL}/user/email/${email}`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SERVER}/user/email/${email}`,
+      );
       console.log("Update user response:", response.data);
       setUserInputs(
         userInputs.map((userInput, i) =>
@@ -48,17 +55,16 @@ const Page: React.FC = () => {
         ),
       );
     } catch (error) {
+      toast.error("User not listed");
       console.error("Update user error:", error);
-      throw error;
     }
   };
 
   const handleAddUserClick = async (index: number) => {
-    localStorage.setItem("user-email", userInputs[index].email);
     const { email } = userInputs[index];
     console.log(email);
     try {
-      const response = await axios.patch(
+      const response = await axiosInstance.patch(
         `http://localhost:8000/organization/user`,
         {
           userEmail: email,
@@ -66,8 +72,8 @@ const Page: React.FC = () => {
       );
       console.log("Add user response:", response.data);
     } catch (error) {
+      toast.error("Error adding user");
       console.error("Add user error:", error);
-      throw error;
     }
   };
 
@@ -76,6 +82,7 @@ const Page: React.FC = () => {
       <Head>
         <title>User Profile</title>
       </Head>
+      <ToastContainer />
       <DashboardLayout
         type="user"
         heading="Visa Applications"
