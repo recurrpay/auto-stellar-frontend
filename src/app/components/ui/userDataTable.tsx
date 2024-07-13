@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+
 import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type SortingState,
+  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -17,14 +17,13 @@ import {
 } from "@tanstack/react-table";
 
 import { Button } from "@/app/components/ui/button";
-import { Checkbox } from "@/app/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
+
 import { Input } from "@/app/components/ui/input";
 import {
   Table,
@@ -35,10 +34,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const columns: ColumnDef<any>[] = [
+import { getOrganizationUsers, type OrgUser } from "@/apis/organization";
+
+const columns: ColumnDef<OrgUser>[] = [
   {
     accessorKey: "id",
-    header: "Id",
+    header: "ID",
     cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
   },
   {
@@ -66,6 +67,21 @@ const columns: ColumnDef<any>[] = [
       </Button>
     ),
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Joining Date
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("createdAt")}</div>
+    ),
   },
 ];
 
