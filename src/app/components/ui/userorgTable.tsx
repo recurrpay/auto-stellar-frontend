@@ -96,14 +96,14 @@ export function OrganizationTable() {
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("org_token")}`,
+              Authorization: `Bearer ${localStorage.getItem("user_token")}`,
             },
           },
         );
 
         const fetchedData = response.data.map((item: any) => ({
           id: item.organisation.id.toString(),
-          orgName: item.organisation.OrgProfile.name, // Adjust this according to the actual structure
+          orgName: item.organisation.OrgProfile.name,
           joined: new Date(item.createdAt).toLocaleDateString(),
         }));
 
@@ -153,7 +153,9 @@ export function OrganizationTable() {
         <div className="flex items-center py-4">
           <Input
             placeholder="Filter emails..."
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            value={
+              (table.getColumn("orgName")?.getFilterValue() as string) ?? ""
+            }
             onChange={(event) =>
               table.getColumn("email")?.setFilterValue(event.target.value)
             }

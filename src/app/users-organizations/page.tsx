@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/user-dashboard";
-import { OrganizationTable } from "@/app/components/ui/orgTable";
+import { OrganizationTable } from "@/app/components/ui/userorgTable";
 import axios from "axios";
 
 const Page = () => {

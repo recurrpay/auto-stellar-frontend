@@ -117,9 +117,10 @@ export function UserPayment({ userId }: { userId: number }) {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("Fetching data...", userId);
       try {
         const response = await axios.get(
-          `http://localhost:8000/payment/user/${17}`,
+          `http://localhost:8000/payment/user/${userId}`,
         );
         console.log("Payment data:", response.data);
         setData(response.data);
