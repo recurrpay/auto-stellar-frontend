@@ -141,18 +141,20 @@ export default function OrgDashboard() {
       <main className="flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div className="">
           <div className="flex gap-4">
-            <Card className="sm:col-span-2">
-              <CardHeader className="pb-3">
-                <CardTitle>Recurr Pay</CardTitle>
-                <CardDescription className="max-w-lg text-balance leading-relaxed">
-                  A comprehensive view of your organization's financial health.
-                </CardDescription>
-              </CardHeader>
-              <CardFooter></CardFooter>
-            </Card>
-            <Card>
+            <Card className="w-[20rem]">
               <CardHeader className="pb-2">
-                <CardDescription>Deposited Funds</CardDescription>
+                <CardDescription>Company Funds</CardDescription>
+                <CardTitle className="text-3xl">$125,329</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-xs text-muted-foreground">
+                  -8% from last month
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="w-[20rem]">
+              <CardHeader className="pb-2">
+                <CardDescription>Total Payroll Value</CardDescription>
                 <CardTitle className="text-3xl">$125,329</CardTitle>
               </CardHeader>
               <CardContent>
@@ -161,20 +163,9 @@ export default function OrgDashboard() {
                 </div>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="w-[20rem]">
               <CardHeader className="pb-2">
-                <CardDescription>This Month</CardDescription>
-                <CardTitle className="text-3xl">$125,329</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +10% from last month
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>This Quarter</CardDescription>
+                <CardDescription>No. of Employees</CardDescription>
                 <CardTitle className="text-3xl">$375,329</CardTitle>
               </CardHeader>
               <CardContent>
