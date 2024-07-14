@@ -40,16 +40,16 @@ export default function HomePage() {
         {/* Create the brand names. All should be in gray in a single line */}
         <div className="m-5 my-10 flex justify-around">
           <Image
-            src="/brand1.png"
+            src="/brand6.jpeg"
             alt="Brand1"
             width={150}
             height={150}
             className=""
           />
-          <Image src="/brand1.png" alt="Brand2" width={150} height={150} />
-          <Image src="/brand1.png" alt="Brand3" width={150} height={150} />
-          <Image src="/brand1.png" alt="Brand4" width={150} height={150} />
-          <Image src="/brand1.png" alt="Brand5" width={150} height={150} />
+          <Image src="/brand5.svg" alt="Brand2" width={150} height={150} />
+          <Image src="/brand12.jpg" alt="Brand3" width={150} height={150} />
+          <Image src="/brand7.svg" alt="Brand4" width={150} height={150} />
+          <Image src="/brand4.png" alt="Brand5" width={150} height={150} />
         </div>
       </div>
       <div className="my-10 mt-20 text-center">
