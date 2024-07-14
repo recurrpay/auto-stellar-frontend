@@ -16,6 +16,22 @@ export type AddUserToOrgResponse = {
   updatedAt: Date;
 };
 
+export type Balance = {
+  id: number;
+  orgId: number;
+  amount: number;
+};
+
+export type Deposit = {
+  id: number;
+  orgId: number;
+  amount: number;
+  token: string;
+  txHash: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export async function addUserToOrg({
   userEmail,
 }: {
@@ -52,4 +68,20 @@ export async function getOrganizationUsers(): Promise<OrgUser[]> {
     createdAt: item.createdAt,
     avatar: item.user.Profile.avatar,
   }));
+}
+
+export async function getBalance(): Promise<Balance> {
+  const response = await axiosInstance.get(`/wallet/balance`);
+
+  const orgUsers = response.data as Balance;
+
+  return orgUsers;
+}
+
+export async function getDeposits(): Promise<Deposit> {
+  const response = await axiosInstance.get(`/wallet/deposit`);
+
+  const orgUsers = response.data as Deposit;
+
+  return orgUsers;
 }

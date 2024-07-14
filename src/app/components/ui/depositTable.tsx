@@ -39,61 +39,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { type Deposit, getDeposits } from "@/apis/organization";
+import Link from "next/link";
 
-const data: Payment[] = [
-  {
-    id: "0",
-    amount: 150.75,
-    token: "XLM",
-    txHash: "tx12345",
-    date: "2022-01-01",
-  },
-  {
-    id: "1",
-    amount: 200.5,
-    token: "XLM",
-    txHash: "tx67890",
-    date: "2022-01-02",
-  },
-  {
-    id: "2",
-    amount: 320.0,
-    token: "XLM",
-    txHash: "tx09876",
-    date: "2022-01-03",
-  },
-  {
-    id: "3",
-    amount: 450.25,
-    token: "XLM",
-    txHash: "tx54321",
-    date: "2022-01-04",
-  },
-  {
-    id: "4",
-    amount: 600.8,
-    token: "XLM",
-    txHash: "tx11223",
-    date: "2022-01-05",
-  },
-];
-
-export type Payment = {
-  id: string;
-  amount: number;
-  token: string;
-  txHash: string;
-  date: string;
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Deposit>[] = [
   {
     accessorKey: "id",
     header: "Id",
     cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
   },
   {
-    accessorKey: "date",
+    accessorKey: "updatedAt",
     header: ({ column }) => {
       return (
         <Button
@@ -105,7 +61,11 @@ export const columns: ColumnDef<Payment>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("date")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">
+        {new Date(row.getValue("updatedAt")).toLocaleDateString()}
+      </div>
+    ),
   },
 
   {
@@ -134,9 +94,18 @@ export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "txHash",
     header: "txHash",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("txHash")}</div>
-    ),
+    cell: ({ row }) => {
+      const txHash: string = row.getValue("txHash");
+
+      <div className="text-right font-medium">
+        <Link
+          href={`https://horizon-testnet.stellar.org/transactions/${txHash}`}
+          target="_blank"
+        >
+          {txHash?.substring(0, 5) + "..."}
+        </Link>
+      </div>;
+    },
   },
   {
     id: "actions",
@@ -178,6 +147,7 @@ export function DataTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [data, setData] = React.useState<Deposit[]>([]);
 
   const table = useReactTable({
     data,
@@ -196,6 +166,22 @@ export function DataTable() {
       columnVisibility,
       rowSelection,
     },
+  });
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getDeposits();
+
+        setData(res);
+      } catch (error) {
+        // setError(error);
+      } finally {
+        // setLoading(false);
+      }
+    };
+
+    void fetchData();
   });
 
   return (
