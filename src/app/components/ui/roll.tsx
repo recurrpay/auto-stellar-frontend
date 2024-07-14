@@ -65,7 +65,9 @@ export const columns: ColumnDef<OrgPayroll>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <Badge className="lowercase">{row.getValue("state")}</Badge>
+      <Badge className="bg-[#F2F6F9] align-middle lowercase text-black">
+        {row.getValue("state")}
+      </Badge>
     ),
   },
   {
@@ -80,7 +82,9 @@ export const columns: ColumnDef<OrgPayroll>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <Badge className="lowercase">{row.getValue("paymentType")}</Badge>
+      <Badge className="bg-[#F2F6F9] align-middle lowercase text-black">
+        {row.getValue("paymentType")}
+      </Badge>
     ),
   },
   {
