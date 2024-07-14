@@ -69,9 +69,12 @@ export default function HomePage() {
               alt="ice loid"
               className="self-center"
             />
-            <h1 className="mb-2 text-3xl font-bold">What are we doing?</h1>
+            <h1 className="mb-2 text-3xl font-bold">
+              Automating Recurring Payments
+            </h1>
             <p className="text-lg text-gray-700">
-              Helping the organisations with payrolls and recurring payments
+              Streamlining payroll, grants, and contractor payments.Eliminating
+              manual processes and reducing human error
             </p>
             <Button
               size="gs"
@@ -83,15 +86,18 @@ export default function HomePage() {
           </div>
           <div className="flex w-1/4 flex-col gap-4 rounded-2xl border border-gray-200 p-6 shadow-lg transition duration-300 ease-in-out hover:shadow-2xl">
             <Image
-              src="/iceloid.svg"
+              src="/stellar.png"
               width={100}
               height={100}
               alt="ice loid"
               className="self-center"
             />
-            <h1 className="mb-2 text-3xl font-bold">What are we doing?</h1>
+            <h1 className="mb-2 text-3xl font-bold">
+              Leveraging Stellar Blockchain
+            </h1>
             <p className="text-lg text-gray-700">
-              Helping the organisations with payrolls and recurring payments
+              Ensuring secure and transparent transactions. Enabling multi-token
+              support and built-in currency conversion
             </p>
             <Button
               size="gs"
@@ -103,15 +109,18 @@ export default function HomePage() {
           </div>
           <div className="flex w-1/4 flex-col gap-4 rounded-2xl border border-gray-200 p-6 shadow-lg transition duration-300 ease-in-out hover:shadow-2xl">
             <Image
-              src="/iceloid.svg"
+              src="/simplify.svg"
               width={100}
               height={100}
               alt="ice loid"
               className="self-center"
             />
-            <h1 className="mb-2 text-3xl font-bold">What are we doing?</h1>
+            <h1 className="mb-2 text-3xl font-bold">
+              Simplifying Financial Management
+            </h1>
             <p className="text-lg text-gray-700">
-              Helping the organisations with payrolls and recurring payments
+              Providing smart notifications for timely payments. Offering
+              scalable solutions from small teams to large enterprises
             </p>
             <Button
               size="gs"
