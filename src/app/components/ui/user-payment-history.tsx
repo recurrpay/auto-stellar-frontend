@@ -39,6 +39,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import axios from "axios";
+import { getUserPayments, UserPayment } from "@/apis/user";
+import Link from "next/link";
 
 export type Payment = {
   id: string;
@@ -46,24 +48,28 @@ export type Payment = {
   email: string;
 };
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<UserPayment>[] = [
   {
     accessorKey: "id",
     header: "Id",
     cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
   },
   {
-    accessorKey: "email",
+    accessorKey: "paidAt",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Email
+        Date
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase">
+        {new Date(row.getValue("paidAt")).toLocaleDateString()}
+      </div>
+    ),
   },
   {
     accessorKey: "amount",
@@ -72,9 +78,36 @@ export const columns: ColumnDef<Payment>[] = [
       const amount = parseFloat(row.getValue("amount"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: "USD",
+        currency: "XLM",
       }).format(amount);
       return <div className="text-right font-medium">{formatted}</div>;
+    },
+  },
+
+  {
+    accessorKey: "status",
+    header: () => <div className="text-right">Status</div>,
+    cell: ({ row }) => {
+      return (
+        <div className="text-right font-medium">{row.getValue("status")}</div>
+      );
+    },
+  },
+  {
+    accessorKey: "txHash",
+    header: () => <div className="text-right">Tx Hash</div>,
+    cell: ({ row }) => {
+      const txHash: string = row.getValue("txHash");
+      return (
+        <div className="text-right font-medium">
+          <Link
+            href={`https://horizon-testnet.stellar.org/transactions/${txHash}`}
+            target="_blank"
+          >
+            {txHash?.substring(0, 5) + "..."}
+          </Link>
+        </div>
+      );
     },
   },
   {
@@ -107,8 +140,8 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function UserPayment({ userId }: { userId: number }) {
-  const [data, setData] = useState<Payment[]>([]);
+export function UserPaymentHistory() {
+  const [data, setData] = useState<UserPayment[]>([]);
   const [loading, setLoading] = useState(true);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -117,13 +150,10 @@ export function UserPayment({ userId }: { userId: number }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("Fetching data...", userId);
       try {
-        const response = await axios.get(
-          `http://localhost:8000/payment/user/${userId}`,
-        );
-        console.log("Payment data:", response.data);
-        setData(response.data);
+        const data = await getUserPayments();
+
+        setData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -131,8 +161,8 @@ export function UserPayment({ userId }: { userId: number }) {
       }
     };
 
-    fetchData();
-  }, [userId]);
+    void fetchData();
+  }, []);
 
   const table = useReactTable({
     data,

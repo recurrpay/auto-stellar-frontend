@@ -1,11 +1,9 @@
 "use client";
 
 import React from "react";
-import { Chart } from "@/app/components/ui/chart";
-import { SmallChart } from "@/app/components/ui/smallchart";
 import Head from "next/head";
 import DashboardLayout from "@/app/components/layout/user-dashboard";
-import { UserPayment } from "@/app/components/ui/user-payment-history";
+import { UserPaymentHistory } from "@/app/components/ui/user-payment-history";
 
 const page = () => {
   return (
@@ -20,7 +18,7 @@ const page = () => {
         text="Find all your visa application here"
         buttonLabel="New Visa Application"
       >
-        <UserPayment />
+        <UserPaymentHistory />
       </DashboardLayout>
     </>
   );
