@@ -13,6 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { Badge } from "@/components/ui/badge";
 
 import { Button } from "@/app/components/ui/button";
 import { Checkbox } from "@/app/components/ui/checkbox";
@@ -63,7 +64,9 @@ export const columns: ColumnDef<OrgPayroll>[] = [
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue("state")}</div>,
+    cell: ({ row }) => (
+      <Badge className="lowercase">{row.getValue("state")}</Badge>
+    ),
   },
   {
     accessorKey: "paymentType",
@@ -77,7 +80,7 @@ export const columns: ColumnDef<OrgPayroll>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("paymentType")}</div>
+      <Badge className="lowercase">{row.getValue("paymentType")}</Badge>
     ),
   },
   {

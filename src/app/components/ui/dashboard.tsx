@@ -56,7 +56,7 @@ import FundModal from "@/app/components/modals/FundModal";
 export default function OrgDashboard() {
   return (
     <div className="flex min-h-screen flex-col bg-muted/40">
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+      <header className="sticky top-0 z-30 mb-[15px] flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
         <Sheet>
           <SheetTrigger asChild>
             <Button size="icon" variant="outline" className="sm:hidden">
@@ -132,32 +132,26 @@ export default function OrgDashboard() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        {/* <div className="relative ml-auto flex-1 md:grow-0">
-          <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="search"
-            placeholder="Search..."
-            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
-          />
-        </div> */}
+
+        <div className="relative ml-auto flex-1 md:grow-0">
+          <FundModal />
+        </div>
       </header>
       <main className="flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div className="">
           <div className="flex gap-4">
             <Card className="sm:col-span-2">
               <CardHeader className="pb-3">
-                <CardTitle>Funds</CardTitle>
+                <CardTitle>Recurr Pay</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
                   A comprehensive view of your organization's financial health.
                 </CardDescription>
               </CardHeader>
-              <CardFooter>
-                <FundModal />
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <CardDescription>Your Funds</CardDescription>
+                <CardDescription>Deposited Funds</CardDescription>
                 <CardTitle className="text-3xl">$125,329</CardTitle>
               </CardHeader>
               <CardContent>
@@ -185,17 +179,6 @@ export default function OrgDashboard() {
               <CardContent>
                 <div className="text-xs text-muted-foreground">
                   +15% from last quarter
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="pb-2">
-                <CardDescription>This Year</CardDescription>
-                <CardTitle className="text-2xl">$1,250,329</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-xs text-muted-foreground">
-                  +20% from last year
                 </div>
               </CardContent>
             </Card>
@@ -310,7 +293,6 @@ export default function OrgDashboard() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Date</TableHead>
-                  <TableHead>Description</TableHead>
                   <TableHead>Amount</TableHead>
                   <TableHead>Status</TableHead>
                 </TableRow>
@@ -318,80 +300,70 @@ export default function OrgDashboard() {
               <TableBody>
                 <TableRow>
                   <TableCell>2023-04-01</TableCell>
-                  <TableCell>Payroll</TableCell>
-                  <TableCell className="text-right">$50,000.00</TableCell>
+                  <TableCell className="">$50,000.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>2023-03-25</TableCell>
-                  <TableCell>Rent Payment</TableCell>
-                  <TableCell className="text-right">$5,000.00</TableCell>
+                  <TableCell className="">$5,000.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>2023-03-15</TableCell>
-                  <TableCell>Supplier Invoice</TableCell>
-                  <TableCell className="text-right">$12,500.00</TableCell>
+                  <TableCell className="">$12,500.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>2023-03-05</TableCell>
-                  <TableCell>Utility Bill</TableCell>
-                  <TableCell className="text-right">$1,200.00</TableCell>
+                  <TableCell className="">$1,200.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>2023-02-28</TableCell>
-                  <TableCell>Client Payment</TableCell>
-                  <TableCell className="text-right">$25,000.00</TableCell>
+                  <TableCell className="">$25,000.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>2023-02-20</TableCell>
-                  <TableCell>Advertising Expense</TableCell>
-                  <TableCell className="text-right">$3,500.00</TableCell>
+                  <TableCell className=" ">$3,500.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>2023-02-10</TableCell>
-                  <TableCell>Payroll</TableCell>
-                  <TableCell className="text-right">$52,000.00</TableCell>
+                  <TableCell className="">$52,000.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>2023-01-31</TableCell>
-                  <TableCell>Rent Payment</TableCell>
-                  <TableCell className="text-right">$5,000.00</TableCell>
+                  <TableCell className="">$5,000.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>2023-01-20</TableCell>
-                  <TableCell>Supplier Invoice</TableCell>
-                  <TableCell className="text-right">$8,000.00</TableCell>
+                  <TableCell className="">$8,000.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>2023-01-10</TableCell>
-                  <TableCell>Utility Bill</TableCell>
-                  <TableCell className="text-right">$1,100.00</TableCell>
+                  <TableCell className="">$1,100.00</TableCell>
                   <TableCell>
                     <Badge variant="secondary">Pending</Badge>
                   </TableCell>
