@@ -18,11 +18,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<SignupData>({
     authType: "ORG_SIGNUP",
-    email: "",
-    password: "",
-    name: "",
-    avatar: "",
-    website: "",
+    email: "org@gmail.com",
+    password: "1234",
+    name: "InterStellar",
+    avatar: "x",
+    website: "x",
     x: "abcd",
     y: "abcd",
   });
@@ -35,10 +35,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     try {
       const response = await axios.post(`${API_URL}/auth/org/signup`, data);
       console.log("Signup response:", response.data);
-      const test = localStorage.setItem(
-        "org_token",
-        response.data.access_token,
-      );
+      const test = localStorage.setItem("token", response.data.access_token);
       console.log("org_token", test);
 
       return response.data;
