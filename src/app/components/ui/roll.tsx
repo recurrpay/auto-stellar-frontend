@@ -31,55 +31,74 @@ import {
   TableRow,
   TableHeader,
 } from "@/components/ui/table";
-import { getOrgPayrolls, type OrgUser } from "@/apis/payroll";
+import { getOrgPayrolls, type OrgPayroll } from "@/apis/payroll";
 
-export type Payment = {
-  id: string;
-  orgName: string;
-  joined: string;
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<OrgPayroll>[] = [
   {
     accessorKey: "id",
-    header: "Id",
+    header: "ID",
     cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
   },
   {
-    accessorKey: "orgName",
+    accessorKey: "name",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Organizations
+        Name
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="lowercase">{row.getValue("name")}</div>,
+  },
+  {
+    accessorKey: "state",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        State
+        <CaretSortIcon className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="lowercase">{row.getValue("state")}</div>,
+  },
+  {
+    accessorKey: "paymentType",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Type
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("orgName")}</div>
+      <div className="lowercase">{row.getValue("paymentType")}</div>
     ),
   },
   {
-    accessorKey: "joined",
+    accessorKey: "paymentDate",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Joined
+        Date
         <CaretSortIcon className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("joined")}</div>
-    ),
+    cell: ({ row }) => {
+      return <div className="lowercase">{row.getValue("paymentDate")}</div>;
+    },
   },
 ];
 
 export function DataTable() {
-  const [data, setData] = useState<Payment[]>([]);
-  const [orgUsers, setOrgUsers] = useState<OrgUser[]>([]);
+  const [orgPayrolls, setOrgPayrolls] = useState<OrgPayroll[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>(null);
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -91,9 +110,8 @@ export function DataTable() {
     const fetchData = async () => {
       try {
         const data = await getOrgPayrolls();
-        console.log(data);
 
-        setOrgUsers(data);
+        setOrgPayrolls(data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -106,7 +124,7 @@ export function DataTable() {
   }, []);
 
   const table = useReactTable({
-    data,
+    data: orgPayrolls,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -137,10 +155,10 @@ export function DataTable() {
       <div className="w-full">
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter emails..."
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter Name"
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
+              table.getColumn("name")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
