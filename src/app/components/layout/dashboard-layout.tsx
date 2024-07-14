@@ -34,7 +34,7 @@ export default function DashboardLayout({
   buttonLabel,
   heading,
 }: DashboardLayoutProps) {
-  const [selectedValue, setSelectedValue] = useState("Select Payroll");
+  const [selectedValue, setSelectedValue] = useState("create payroll");
   const router = useRouter();
 
   const handleValueChange = (value: string) => {
