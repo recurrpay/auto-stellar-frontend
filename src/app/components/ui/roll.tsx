@@ -160,12 +160,12 @@ export function DataTable() {
   return (
     <>
       <div className="w-full">
-        <div className="flex items-center py-4">
+        <div className="flex items-center justify-between space-x-4 py-4">
           <Input
-            placeholder="Filter Name"
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+            placeholder="Filter emails..."
+            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
+              table.getColumn("email")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />
@@ -175,7 +175,7 @@ export function DataTable() {
                 Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="">
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
@@ -193,6 +193,9 @@ export function DataTable() {
                 ))}
             </DropdownMenuContent>
           </DropdownMenu>
+          <a href="/organization-payroll">
+            <Button>Create Payroll</Button>
+          </a>
         </div>
         <div className="rounded-md border">
           <Table>

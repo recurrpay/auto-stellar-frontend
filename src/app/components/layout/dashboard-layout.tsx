@@ -3,11 +3,21 @@ import { MainNav } from "@/app/components/main-nav";
 import { DashboardNav } from "@/app/components/nav";
 import { SiteFooter } from "@/app/components/site-footer";
 import { UserAccountNav } from "@/app/components/user-account-nav";
+import { Icons } from "@/app/components/icons";
 import DashboardSkeleton from "../ui/dashboard-skeleton";
 import { cn } from "@/app/lib/utils";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { toast } from "@/app/components/ui/use-toast";
+import { Button } from "@/app/components/ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+} from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 interface DashboardLayoutProps {
   type: "user" | "admin" | "empty" | "none";
@@ -26,6 +36,17 @@ export default function DashboardLayout({
   buttonLabel,
   heading,
 }: DashboardLayoutProps) {
+  const [selectedValue, setSelectedValue] = useState("create payroll");
+  const router = useRouter();
+  const handleValueChange = (value) => {
+    setSelectedValue(value);
+    if (value === "create payroll") {
+      router.push("/organization-payroll");
+    } else if (value === "option2") {
+      router.push("/add-users");
+    }
+  };
+
   return (
     <div className="flex min-h-screen flex-col space-y-6">
       <header className="sticky top-0 z-40 border-b bg-background">
@@ -63,6 +84,29 @@ export default function DashboardLayout({
                   : dashboardConfig.adminSidebarNav
             }
           />
+          <div className="mt-[2rem] flex flex-col items-start gap-2">
+            <Select value={selectedValue} onValueChange={handleValueChange}>
+              <SelectTrigger className="w-[180px] bg-black text-white">
+                <div className="flex items-center gap-2">
+                  <Icons.add className="h-4 w-4 text-white" />{" "}
+                  {/* Ensure the icon is white */}
+                  <SelectValue placeholder="Select an option" />
+                </div>
+              </SelectTrigger>
+              <SelectContent className="">
+                <SelectGroup>
+                  <SelectItem value="create payroll">
+                    <div className="flex items-center gap-2">
+                      Create Payroll
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="option2">
+                    <div className="flex items-center gap-2">Add Employee</div>
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </aside>
         <main className="flex w-full flex-1 flex-col overflow-hidden">
           {loading ? (

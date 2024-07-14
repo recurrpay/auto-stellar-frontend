@@ -52,6 +52,7 @@ import {
   ChartContainer,
 } from "@/components/ui/chart";
 import FundModal from "@/app/components/modals/FundModal";
+import { Icons } from "@/app/components/icons";
 
 export default function OrgDashboard() {
   return (
