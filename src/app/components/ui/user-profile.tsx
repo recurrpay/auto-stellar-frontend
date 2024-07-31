@@ -30,7 +30,7 @@ const formSchema = z.object({
   address: z.string(),
   nationalIdType: z.string(),
   nationalId: z.string(),
-  nationalIdDoc: z.instanceof(FileList),
+  // nationalIdDoc: z.instanceof(FileList),
 });
 
 export function UserProfile({ className, ...props }) {
@@ -46,7 +46,7 @@ export function UserProfile({ className, ...props }) {
       address: "",
       nationalIdType: "",
       nationalId: "",
-      nationalIdDoc: undefined,
+      // nationalIdDoc: undefined,
     },
   });
 
@@ -222,7 +222,7 @@ export function UserProfile({ className, ...props }) {
               )}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="nationalIdDoc"
               render={({ field }) => (
@@ -239,7 +239,7 @@ export function UserProfile({ className, ...props }) {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <Button type="submit" className="col-span-2 mt-6">
               Submit
