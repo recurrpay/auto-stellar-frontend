@@ -92,7 +92,7 @@ export function OrganizationTable() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/user/orgs/list",
+          "https://auto-stellar-backend.onrender.com/user/orgs/list",
           {
             headers: {
               "Content-Type": "application/json",

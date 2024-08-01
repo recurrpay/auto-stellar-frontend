@@ -29,7 +29,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   console.log("data", formData);
   const router = useRouter();
 
-  const API_URL = "http://localhost:8000";
+  const API_URL = "https://auto-stellar-backend.onrender.com";
 
   const signup = async (data: SignupData) => {
     try {
