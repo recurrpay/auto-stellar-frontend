@@ -1,12 +1,10 @@
 "use client";
-import ConnectButton from "./components/ui/connect_wallet";
 
 import { MainNav } from "./components/user-nav";
-import { Search } from "./components/ui/search";
-import { UserNav } from "./components/ui/nav";
 import Landing from "./components/ui/landing_text";
 import { Button } from "./components/ui/button";
 import { Globe } from "./components/Globe";
+
 import Image from "next/image";
 
 export default function HomePage() {
